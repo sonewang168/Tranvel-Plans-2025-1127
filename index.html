@@ -228,7 +228,7 @@
         .btn-sm { padding: 8px 12px; font-size: 0.8em; }
         
         /* 🗺️ 地圖導航按鈕 */
-        .map-btn { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; background: var(--bg-dark); border-radius: 50%; font-size: 0.9em; cursor: pointer; margin-left: 6px; transition: all 0.2s; vertical-align: middle; }
+        .map-btn { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; background: var(--bg-dark); border-radius: 50%; font-size: 0.9em; cursor: pointer; margin-left: 6px; transition: all 0.2s; vertical-align: middle; text-decoration: none; }
         .map-btn:hover, .map-btn:active { background: var(--cyan); transform: scale(1.1); }
         
         /* 📸 每日封面照片 */
@@ -2352,7 +2352,7 @@ const ATTRACTIONS_DB = {
                         <div class="schedule-item ${s.reminders?.length > 0 ? 'has-reminder' : ''} ${s.synced ? 'synced' : ''}">
                             <div class="schedule-time">${s.startTime} - ${s.endTime}</div>
                             <div class="schedule-title">${getTypeEmoji(s.type)} ${s.title}</div>
-                            ${s.location ? `<div class="schedule-location">📍 ${s.location} <span class="map-btn" onclick="event.stopPropagation();openMap('${s.location.replace(/'/g, "\\'")}')">🗺️</span></div>` : ''}
+                            ${s.location ? `<div class="schedule-location">📍 ${s.location} <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.location)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();">🗺️</a></div>` : ''}
                             <div class="schedule-actions">
                                 ${s.reminders?.length > 0 ? '<span class="schedule-badge reminder">🔔 已設提醒</span>' : ''}
                                 ${s.synced ? '<span class="schedule-badge synced">📆 已同步</span>' : ''}
@@ -2951,7 +2951,14 @@ const ATTRACTIONS_DB = {
         function openMap(location) {
             if (!location) return;
             const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
-            window.open(url, '_blank');
+            // 使用 <a> 標籤方式開啟，在 PWA 模式下更可靠
+            const a = document.createElement('a');
+            a.href = url;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
         
         // ============================================
