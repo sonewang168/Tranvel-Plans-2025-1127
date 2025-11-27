@@ -343,9 +343,10 @@
                         <div class="card-icon cyan">📅</div>
                         <div><div class="card-title">每日行程</div><div class="card-subtitle">規劃您的旅遊行程</div></div>
                     </div>
-                    <button class="btn btn-secondary btn-sm" onclick="syncAllToGoogleCalendar()" style="margin-bottom:10px;">
-                        📆 同步全部到 Google 日曆
-                    </button>
+                    <div class="action-row" style="margin-bottom:0;">
+                        <button class="btn btn-outline btn-sm" onclick="showBatchReminderModal()">🔔 批次設定提醒</button>
+                        <button class="btn btn-secondary btn-sm" onclick="syncAllToGoogleCalendar()">📆 同步全部</button>
+                    </div>
                 </div>
                 
                 <div id="itineraryList"></div>
@@ -700,6 +701,57 @@
         </div>
     </div>
     
+    <!-- Modal: 批次設定提醒 -->
+    <div class="modal-overlay" id="batchReminderModal">
+        <div class="modal">
+            <div class="modal-handle"></div>
+            <div class="modal-title">🔔 批次設定 LINE 提醒</div>
+            
+            <p style="color:var(--text-dim);font-size:0.9em;text-align:center;margin-bottom:15px;">
+                為所有<strong>尚未設定提醒</strong>的行程加入 LINE 提醒
+            </p>
+            
+            <div id="batchReminderStats" style="background:var(--bg-dark);border-radius:10px;padding:12px;margin-bottom:15px;text-align:center;">
+                <!-- 動態填入統計 -->
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">選擇提醒時間</label>
+                <div class="reminder-grid" id="batchReminderOptions">
+                    <label class="reminder-option checked" onclick="toggleReminder(this)">
+                        <div class="reminder-checkbox">✓</div><span>前 1 天</span>
+                        <input type="checkbox" value="1440" checked>
+                    </label>
+                    <label class="reminder-option" onclick="toggleReminder(this)">
+                        <div class="reminder-checkbox">✓</div><span>前 2 小時</span>
+                        <input type="checkbox" value="120">
+                    </label>
+                    <label class="reminder-option checked" onclick="toggleReminder(this)">
+                        <div class="reminder-checkbox">✓</div><span>前 1 小時</span>
+                        <input type="checkbox" value="60" checked>
+                    </label>
+                    <label class="reminder-option" onclick="toggleReminder(this)">
+                        <div class="reminder-checkbox">✓</div><span>前 30 分鐘</span>
+                        <input type="checkbox" value="30">
+                    </label>
+                </div>
+            </div>
+            
+            <div class="input-group" style="margin-top:10px;">
+                <label class="reminder-option checked" onclick="toggleReminder(this)" style="width:100%;">
+                    <div class="reminder-checkbox">✓</div>
+                    <span>覆蓋已有提醒設定的行程</span>
+                    <input type="checkbox" id="overwriteReminders" value="overwrite" checked>
+                </label>
+            </div>
+            
+            <div class="action-row">
+                <button class="btn btn-outline" onclick="closeModal('batchReminderModal')">取消</button>
+                <button class="btn btn-primary" onclick="applyBatchReminders()">🔔 套用提醒</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
         // ============================================
         // 景點資料庫（可擴充）
@@ -908,8 +960,38 @@
                     </div>
                 </div>
                 
+                <div class="suggest-section" style="margin-top:15px;">
+                    <div class="suggest-title">🔔 批次設定提醒（所有行程）</div>
+                    <div class="reminder-grid" id="batchReminderGrid">
+                        <label class="reminder-option" onclick="toggleReminder(this)">
+                            <div class="reminder-checkbox">✓</div><span>前 1 天</span>
+                            <input type="checkbox" value="1440" checked>
+                        </label>
+                        <label class="reminder-option checked" onclick="toggleReminder(this)">
+                            <div class="reminder-checkbox">✓</div><span>前 2 小時</span>
+                            <input type="checkbox" value="120">
+                        </label>
+                        <label class="reminder-option" onclick="toggleReminder(this)">
+                            <div class="reminder-checkbox">✓</div><span>前 1 小時</span>
+                            <input type="checkbox" value="60">
+                        </label>
+                        <label class="reminder-option" onclick="toggleReminder(this)">
+                            <div class="reminder-checkbox">✓</div><span>前 30 分鐘</span>
+                            <input type="checkbox" value="30">
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="suggest-section" style="margin-top:10px;">
+                    <label class="reminder-option" onclick="toggleReminder(this)" style="width:100%;">
+                        <div class="reminder-checkbox">✓</div>
+                        <span>📆 同步到 Google 日曆</span>
+                        <input type="checkbox" id="batchSyncGoogle" value="google">
+                    </label>
+                </div>
+                
                 <p style="font-size:0.85em;color:var(--text-muted);text-align:center;margin-top:10px;">
-                    點擊可取消選擇，系統會自動分配到各天
+                    點擊景點可取消選擇，系統會自動分配到各天
                 </p>
             `;
             
@@ -928,7 +1010,7 @@
             return Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
         }
         
-        function confirmAutoGenerate() {
+        async function confirmAutoGenerate() {
             const dest = appData.trip.destination;
             const dbData = ATTRACTIONS_DB[dest];
             
@@ -953,6 +1035,13 @@
                 return;
             }
             
+            // 取得批次提醒設定
+            const batchReminders = [];
+            document.querySelectorAll('#batchReminderGrid .reminder-option.checked input').forEach(input => {
+                batchReminders.push(parseInt(input.value));
+            });
+            const batchSyncGoogle = document.getElementById('batchSyncGoogle')?.checked || false;
+            
             // 確保已產生天數
             if (appData.days.length === 0) {
                 const start = new Date(appData.trip.startDate);
@@ -963,13 +1052,18 @@
             // 分配景點到各天
             const spotsPerDay = Math.ceil(selectedSpots.length / appData.days.length);
             let spotIndex = 0;
+            let totalSchedules = 0;
             
-            appData.days.forEach((day, dayIdx) => {
+            showToast('🔄 產生行程中...', 'info');
+            
+            for (let dayIdx = 0; dayIdx < appData.days.length; dayIdx++) {
+                const day = appData.days[dayIdx];
+                
                 // 第一天加入抵達行程
                 if (dayIdx === 0 && dbData.defaultSchedule.length > 0) {
                     dbData.defaultSchedule.forEach(ds => {
                         const times = ds.time.split('-');
-                        day.schedules.push({
+                        const schedule = {
                             id: Date.now() + Math.random(),
                             startTime: times[0],
                             endTime: times[1],
@@ -977,9 +1071,16 @@
                             type: ds.type,
                             location: '',
                             note: '',
-                            reminders: [],
+                            reminders: [...batchReminders],
                             synced: false
-                        });
+                        };
+                        day.schedules.push(schedule);
+                        
+                        // 建立 LINE 提醒
+                        if (batchReminders.length > 0) {
+                            createLineReminders(day, schedule);
+                        }
+                        totalSchedules++;
                     });
                 }
                 
@@ -988,7 +1089,7 @@
                     const spot = selectedSpots[spotIndex++];
                     const times = spot.time.split('-');
                     
-                    day.schedules.push({
+                    const schedule = {
                         id: Date.now() + Math.random() + spotIndex,
                         startTime: times[0],
                         endTime: times[1],
@@ -996,19 +1097,39 @@
                         type: spot.type,
                         location: spot.location,
                         note: '',
-                        reminders: [],
+                        reminders: [...batchReminders],
                         synced: false
-                    });
+                    };
+                    
+                    day.schedules.push(schedule);
+                    
+                    // 建立 LINE 提醒
+                    if (batchReminders.length > 0) {
+                        createLineReminders(day, schedule);
+                    }
+                    
+                    // 同步到 Google 日曆
+                    if (batchSyncGoogle) {
+                        const success = await addEventToGoogleCalendar(schedule, day);
+                        if (success) schedule.synced = true;
+                    }
+                    
+                    totalSchedules++;
                 }
                 
                 // 排序行程
                 day.schedules.sort((a, b) => a.startTime.localeCompare(b.startTime));
-            });
+            }
             
             saveData();
             renderItinerary();
             closeModal('autoGenerateModal');
-            showToast(`✅ 已產生 ${selectedSpots.length} 個行程！`, 'success');
+            
+            let msg = `✅ 已產生 ${totalSchedules} 個行程！`;
+            if (batchReminders.length > 0) msg += `\n🔔 已設定 LINE 提醒`;
+            if (batchSyncGoogle) msg += `\n📆 已同步 Google 日曆`;
+            showToast(msg, 'success');
+            
             switchPage('itinerary');
         }
         
@@ -1417,6 +1538,108 @@
             fetch(gasUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ action: 'getSchedules', secret: gasSecret }) })
                 .then(r => r.json())
                 .then(result => showToast(result.success ? `📋 ${result.schedules?.length || 0} 個排程` : '❌ 查詢失敗', result.success ? 'success' : 'error'));
+        }
+        
+        // ============================================
+        // 批次設定提醒
+        // ============================================
+        function showBatchReminderModal() {
+            // 統計行程數量
+            let totalSchedules = 0;
+            let withReminders = 0;
+            let withoutReminders = 0;
+            
+            appData.days.forEach(day => {
+                day.schedules.forEach(s => {
+                    totalSchedules++;
+                    if (s.reminders && s.reminders.length > 0) {
+                        withReminders++;
+                    } else {
+                        withoutReminders++;
+                    }
+                });
+            });
+            
+            const statsHtml = `
+                <div style="display:flex;justify-content:space-around;text-align:center;">
+                    <div>
+                        <div style="font-size:1.5em;font-weight:bold;color:var(--cyan);">${totalSchedules}</div>
+                        <div style="font-size:0.8em;color:var(--text-muted);">總行程數</div>
+                    </div>
+                    <div>
+                        <div style="font-size:1.5em;font-weight:bold;color:var(--orange);">${withReminders}</div>
+                        <div style="font-size:0.8em;color:var(--text-muted);">已有提醒</div>
+                    </div>
+                    <div>
+                        <div style="font-size:1.5em;font-weight:bold;color:var(--text-dim);">${withoutReminders}</div>
+                        <div style="font-size:0.8em;color:var(--text-muted);">無提醒</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('batchReminderStats').innerHTML = statsHtml;
+            
+            // 重置選項
+            document.querySelectorAll('#batchReminderOptions .reminder-option').forEach(opt => {
+                const input = opt.querySelector('input');
+                if (input.value === '1440' || input.value === '60') {
+                    opt.classList.add('checked');
+                    input.checked = true;
+                } else {
+                    opt.classList.remove('checked');
+                    input.checked = false;
+                }
+            });
+            
+            showModal('batchReminderModal');
+        }
+        
+        function applyBatchReminders() {
+            const { lineToken, lineUserId, gasUrl, gasSecret } = appData.settings;
+            
+            if (!lineToken || !lineUserId || !gasUrl || !gasSecret) {
+                showToast('請先在設定頁面填寫 LINE 和 GAS 資訊', 'error');
+                return;
+            }
+            
+            // 取得選中的提醒時間
+            const selectedReminders = [];
+            document.querySelectorAll('#batchReminderOptions .reminder-option.checked input').forEach(input => {
+                selectedReminders.push(parseInt(input.value));
+            });
+            
+            if (selectedReminders.length === 0) {
+                showToast('請至少選擇一個提醒時間', 'error');
+                return;
+            }
+            
+            const overwrite = document.getElementById('overwriteReminders')?.checked || false;
+            
+            showToast('🔄 設定中...', 'info');
+            
+            let updatedCount = 0;
+            let reminderCount = 0;
+            
+            appData.days.forEach(day => {
+                day.schedules.forEach(schedule => {
+                    // 檢查是否需要更新
+                    const hasReminders = schedule.reminders && schedule.reminders.length > 0;
+                    if (hasReminders && !overwrite) return;
+                    
+                    // 更新提醒設定
+                    schedule.reminders = [...selectedReminders];
+                    updatedCount++;
+                    
+                    // 建立 LINE 提醒
+                    createLineReminders(day, schedule);
+                    reminderCount += selectedReminders.length;
+                });
+            });
+            
+            saveData();
+            renderItinerary();
+            closeModal('batchReminderModal');
+            
+            showToast(`✅ 已為 ${updatedCount} 個行程設定提醒！`, 'success');
         }
         
         // ============================================
