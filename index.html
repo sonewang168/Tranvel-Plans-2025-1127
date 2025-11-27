@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="旅遊規劃高手">
     <meta name="theme-color" content="#0f172a">
-    <title>旅遊規劃高手 v3</title>
+    <title>旅遊規劃高手 v4 - 全球版</title>
     
     <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22%E6%97%85%E9%81%8A%E8%A6%8F%E5%8A%83%E9%AB%98%E6%89%8B%22%2C%22short_name%22%3A%22%E6%97%85%E9%81%8A%E8%A6%8F%E5%8A%83%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230f172a%22%2C%22theme_color%22%3A%22%2306b6d4%22%7D">
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%230f172a' rx='40'/%3E%3Ctext x='90' y='100' font-size='100' text-anchor='middle'%3E✈️%3C/text%3E%3C/svg%3E">
@@ -257,28 +257,68 @@
                         <label class="input-label">目的地</label>
                         <select class="input-field" id="destination" onchange="handleDestinationChange()">
                             <option value="">請選擇目的地</option>
-                            <optgroup label="🇯🇵 日本">
+                            <optgroup label="🌏 亞洲">
                                 <option value="🇯🇵 東京">🇯🇵 東京</option>
                                 <option value="🇯🇵 大阪">🇯🇵 大阪</option>
                                 <option value="🇯🇵 京都">🇯🇵 京都</option>
                                 <option value="🇯🇵 北海道">🇯🇵 北海道</option>
                                 <option value="🇯🇵 沖繩">🇯🇵 沖繩</option>
-                                <option value="🇯🇵 九州">🇯🇵 九州</option>
-                                <option value="🇯🇵 名古屋">🇯🇵 名古屋</option>
-                                <option value="🇯🇵 福岡">🇯🇵 福岡</option>
-                            </optgroup>
-                            <optgroup label="🇰🇷 韓國">
                                 <option value="🇰🇷 首爾">🇰🇷 首爾</option>
                                 <option value="🇰🇷 釜山">🇰🇷 釜山</option>
                                 <option value="🇰🇷 濟州島">🇰🇷 濟州島</option>
-                            </optgroup>
-                            <optgroup label="🌏 東南亞">
-                                <option value="🇹🇭 泰國">🇹🇭 泰國</option>
-                                <option value="🇻🇳 越南">🇻🇳 越南</option>
+                                <option value="🇹🇭 曼谷">🇹🇭 曼谷</option>
+                                <option value="🇹🇭 清邁">🇹🇭 清邁</option>
+                                <option value="🇹🇭 普吉島">🇹🇭 普吉島</option>
                                 <option value="🇸🇬 新加坡">🇸🇬 新加坡</option>
+                                <option value="🇻🇳 河內">🇻🇳 河內</option>
+                                <option value="🇻🇳 胡志明市">🇻🇳 胡志明市</option>
+                                <option value="🇭🇰 香港">🇭🇰 香港</option>
+                                <option value="🇲🇴 澳門">🇲🇴 澳門</option>
+                                <option value="🇲🇾 吉隆坡">🇲🇾 吉隆坡</option>
+                                <option value="🇮🇩 峇里島">🇮🇩 峇里島</option>
+                                <option value="🇵🇭 長灘島">🇵🇭 長灘島</option>
+                                <option value="🇨🇳 上海">🇨🇳 上海</option>
+                                <option value="🇨🇳 北京">🇨🇳 北京</option>
                             </optgroup>
-                            <optgroup label="🌍 其他">
-                                <option value="custom">✏️ 自訂...</option>
+                            <optgroup label="🌍 歐洲">
+                                <option value="🇫🇷 巴黎">🇫🇷 巴黎</option>
+                                <option value="🇬🇧 倫敦">🇬🇧 倫敦</option>
+                                <option value="🇮🇹 羅馬">🇮🇹 羅馬</option>
+                                <option value="🇮🇹 威尼斯">🇮🇹 威尼斯</option>
+                                <option value="🇪🇸 巴塞隆納">🇪🇸 巴塞隆納</option>
+                                <option value="🇩🇪 慕尼黑">🇩🇪 慕尼黑</option>
+                                <option value="🇳🇱 阿姆斯特丹">🇳🇱 阿姆斯特丹</option>
+                                <option value="🇨🇭 蘇黎世">🇨🇭 蘇黎世</option>
+                                <option value="🇦🇹 維也納">🇦🇹 維也納</option>
+                                <option value="🇨🇿 布拉格">🇨🇿 布拉格</option>
+                                <option value="🇬🇷 雅典">🇬🇷 雅典</option>
+                                <option value="🇬🇷 聖托里尼">🇬🇷 聖托里尼</option>
+                                <option value="🇵🇹 里斯本">🇵🇹 里斯本</option>
+                            </optgroup>
+                            <optgroup label="🌎 北美洲">
+                                <option value="🇺🇸 紐約">🇺🇸 紐約</option>
+                                <option value="🇺🇸 洛杉磯">🇺🇸 洛杉磯</option>
+                                <option value="🇺🇸 舊金山">🇺🇸 舊金山</option>
+                                <option value="🇺🇸 拉斯維加斯">🇺🇸 拉斯維加斯</option>
+                                <option value="🇺🇸 夏威夷">🇺🇸 夏威夷</option>
+                                <option value="🇨🇦 溫哥華">🇨🇦 溫哥華</option>
+                                <option value="🇨🇦 多倫多">🇨🇦 多倫多</option>
+                                <option value="🇲🇽 坎昆">🇲🇽 坎昆</option>
+                            </optgroup>
+                            <optgroup label="🌏 大洋洲">
+                                <option value="🇦🇺 雪梨">🇦🇺 雪梨</option>
+                                <option value="🇦🇺 墨爾本">🇦🇺 墨爾本</option>
+                                <option value="🇳🇿 奧克蘭">🇳🇿 奧克蘭</option>
+                                <option value="🇳🇿 皇后鎮">🇳🇿 皇后鎮</option>
+                            </optgroup>
+                            <optgroup label="🌍 非洲">
+                                <option value="🇿🇦 開普敦">🇿🇦 開普敦</option>
+                                <option value="🇪🇬 開羅">🇪🇬 開羅</option>
+                                <option value="🇲🇦 馬拉喀什">🇲🇦 馬拉喀什</option>
+                                <option value="🇰🇪 奈洛比">🇰🇪 奈洛比</option>
+                            </optgroup>
+                            <optgroup label="✏️ 自訂">
+                                <option value="custom">✏️ 自訂目的地...</option>
                             </optgroup>
                         </select>
                     </div>
@@ -300,11 +340,41 @@
                     <div class="input-group">
                         <label class="input-label">主要幣別</label>
                         <select class="input-field" id="mainCurrency" onchange="saveData()">
-                            <option value="JPY">🇯🇵 日幣 (JPY)</option>
-                            <option value="KRW">🇰🇷 韓元 (KRW)</option>
-                            <option value="THB">🇹🇭 泰銖 (THB)</option>
-                            <option value="USD">🇺🇸 美元 (USD)</option>
-                            <option value="TWD">🇹🇼 台幣 (TWD)</option>
+                            <optgroup label="🌏 亞洲">
+                                <option value="JPY">🇯🇵 日幣 (JPY)</option>
+                                <option value="KRW">🇰🇷 韓元 (KRW)</option>
+                                <option value="THB">🇹🇭 泰銖 (THB)</option>
+                                <option value="SGD">🇸🇬 新幣 (SGD)</option>
+                                <option value="VND">🇻🇳 越盾 (VND)</option>
+                                <option value="HKD">🇭🇰 港幣 (HKD)</option>
+                                <option value="MOP">🇲🇴 澳門幣 (MOP)</option>
+                                <option value="MYR">🇲🇾 馬幣 (MYR)</option>
+                                <option value="IDR">🇮🇩 印尼盾 (IDR)</option>
+                                <option value="PHP">🇵🇭 披索 (PHP)</option>
+                                <option value="CNY">🇨🇳 人民幣 (CNY)</option>
+                            </optgroup>
+                            <optgroup label="🌍 歐洲">
+                                <option value="EUR">🇪🇺 歐元 (EUR)</option>
+                                <option value="GBP">🇬🇧 英鎊 (GBP)</option>
+                                <option value="CHF">🇨🇭 瑞士法郎 (CHF)</option>
+                                <option value="CZK">🇨🇿 捷克克朗 (CZK)</option>
+                            </optgroup>
+                            <optgroup label="🌎 美洲/大洋洲">
+                                <option value="USD">🇺🇸 美金 (USD)</option>
+                                <option value="CAD">🇨🇦 加幣 (CAD)</option>
+                                <option value="MXN">🇲🇽 墨西哥披索 (MXN)</option>
+                                <option value="AUD">🇦🇺 澳幣 (AUD)</option>
+                                <option value="NZD">🇳🇿 紐幣 (NZD)</option>
+                            </optgroup>
+                            <optgroup label="🌍 非洲">
+                                <option value="ZAR">🇿🇦 南非蘭特 (ZAR)</option>
+                                <option value="EGP">🇪🇬 埃及鎊 (EGP)</option>
+                                <option value="MAD">🇲🇦 摩洛哥迪拉姆 (MAD)</option>
+                                <option value="KES">🇰🇪 肯亞先令 (KES)</option>
+                            </optgroup>
+                            <optgroup label="🇹🇼 台灣">
+                                <option value="TWD">🇹🇼 台幣 (TWD)</option>
+                            </optgroup>
                         </select>
                     </div>
                 </div>
@@ -359,22 +429,29 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-icon orange">💰</div>
-                        <div><div class="card-title">旅遊記帳</div><div class="card-subtitle">記錄您的花費</div></div>
+                        <div><div class="card-title">旅遊記帳</div><div class="card-subtitle">記錄您的花費，自動換算台幣</div></div>
                     </div>
                     <div class="stats-row">
                         <div class="stat-card">
                             <div class="stat-value orange" id="expenseJPY">¥0</div>
-                            <div class="stat-label">日幣</div>
+                            <div class="stat-label" id="expenseForeignLabel">外幣</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value emerald" id="expenseTWD">$0</div>
-                            <div class="stat-label">台幣</div>
+                            <div class="stat-value emerald" id="expenseTWD">NT$0</div>
+                            <div class="stat-label">≈ 台幣總計</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-value pink" id="expenseCount">0</div>
                             <div class="stat-label">筆</div>
                         </div>
                     </div>
+                    
+                    <!-- 支付方式統計 -->
+                    <div id="paymentSummary" style="display:none;margin-bottom:12px;">
+                        <div style="font-size:0.85em;color:var(--text-dim);margin-bottom:8px;">📊 支付方式統計</div>
+                        <div id="paymentBreakdown" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+                    </div>
+                    
                     <div class="input-group">
                         <select class="input-field" id="expenseFilterDate" onchange="renderExpenses()">
                             <option value="all">全部日期</option>
@@ -459,6 +536,7 @@
                         <button class="btn btn-outline btn-sm" onclick="testLineNotification()">📨 測試通知</button>
                         <button class="btn btn-secondary btn-sm" onclick="viewSchedules()">📋 查看排程</button>
                     </div>
+                    <button class="btn btn-danger btn-sm" style="margin-top:10px;" onclick="clearAllSchedules()">🗑️ 清除全部排程</button>
                 </div>
                 
                 <div class="card">
@@ -635,15 +713,70 @@
                 <div class="input-group"><label class="input-label">金額</label><input type="number" class="input-field" id="expenseAmount" placeholder="0"></div>
                 <div class="input-group"><label class="input-label">幣別</label>
                     <select class="input-field" id="expenseCurrency">
-                        <option value="JPY">🇯🇵 JPY</option><option value="KRW">🇰🇷 KRW</option><option value="THB">🇹🇭 THB</option>
-                        <option value="USD">🇺🇸 USD</option><option value="TWD">🇹🇼 TWD</option>
+                        <optgroup label="亞洲">
+                            <option value="JPY">🇯🇵 JPY</option>
+                            <option value="KRW">🇰🇷 KRW</option>
+                            <option value="THB">🇹🇭 THB</option>
+                            <option value="SGD">🇸🇬 SGD</option>
+                            <option value="VND">🇻🇳 VND</option>
+                            <option value="HKD">🇭🇰 HKD</option>
+                            <option value="MOP">🇲🇴 MOP</option>
+                            <option value="MYR">🇲🇾 MYR</option>
+                            <option value="IDR">🇮🇩 IDR</option>
+                            <option value="PHP">🇵🇭 PHP</option>
+                            <option value="CNY">🇨🇳 CNY</option>
+                        </optgroup>
+                        <optgroup label="歐洲">
+                            <option value="EUR">🇪🇺 EUR</option>
+                            <option value="GBP">🇬🇧 GBP</option>
+                            <option value="CHF">🇨🇭 CHF</option>
+                            <option value="CZK">🇨🇿 CZK</option>
+                        </optgroup>
+                        <optgroup label="美洲/大洋洲">
+                            <option value="USD">🇺🇸 USD</option>
+                            <option value="CAD">🇨🇦 CAD</option>
+                            <option value="MXN">🇲🇽 MXN</option>
+                            <option value="AUD">🇦🇺 AUD</option>
+                            <option value="NZD">🇳🇿 NZD</option>
+                        </optgroup>
+                        <optgroup label="非洲">
+                            <option value="ZAR">🇿🇦 ZAR</option>
+                            <option value="EGP">🇪🇬 EGP</option>
+                            <option value="MAD">🇲🇦 MAD</option>
+                            <option value="KES">🇰🇪 KES</option>
+                        </optgroup>
+                        <optgroup label="台灣">
+                            <option value="TWD">🇹🇼 TWD</option>
+                        </optgroup>
                     </select>
                 </div>
             </div>
             <div class="input-group"><label class="input-label">支付方式</label>
                 <select class="input-field" id="expensePayment">
-                    <option value="現金">💵 現金</option><option value="信用卡">💳 信用卡</option><option value="Suica/ICOCA">🚃 Suica</option>
-                    <option value="PayPay">📱 PayPay</option><option value="LINE Pay">📱 LINE Pay</option><option value="其他">📌 其他</option>
+                    <optgroup label="💵 現金">
+                        <option value="現金">💵 現金</option>
+                    </optgroup>
+                    <optgroup label="💳 信用卡">
+                        <option value="信用卡">💳 信用卡</option>
+                        <option value="簽帳金融卡">💳 簽帳金融卡</option>
+                    </optgroup>
+                    <optgroup label="📱 電子支付">
+                        <option value="Apple Pay">📱 Apple Pay</option>
+                        <option value="Google Pay">📱 Google Pay</option>
+                        <option value="LINE Pay">📱 LINE Pay</option>
+                        <option value="街口支付">📱 街口支付</option>
+                        <option value="PayPay">📱 PayPay</option>
+                        <option value="微信/支付寶">📱 微信/支付寶</option>
+                    </optgroup>
+                    <optgroup label="🚃 交通卡">
+                        <option value="Suica/ICOCA">🚃 Suica/ICOCA</option>
+                        <option value="悠遊卡">🚃 悠遊卡</option>
+                        <option value="T-money">🚃 T-money</option>
+                        <option value="八達通">🚃 八達通</option>
+                    </optgroup>
+                    <optgroup label="📌 其他">
+                        <option value="其他">📌 其他</option>
+                    </optgroup>
                 </select>
             </div>
             <div class="input-group"><label class="input-label">備註 (選填)</label><input type="text" class="input-field" id="expenseNote" placeholder="備註..."></div>
@@ -745,6 +878,14 @@
                 </label>
             </div>
             
+            <div class="input-group" style="margin-top:10px;">
+                <label class="reminder-option checked" onclick="toggleReminder(this)" style="width:100%;">
+                    <div class="reminder-checkbox">✓</div>
+                    <span>🗑️ 先清除 GAS 資料庫中的舊排程</span>
+                    <input type="checkbox" id="clearOldSchedules" value="clear" checked>
+                </label>
+            </div>
+            
             <div class="action-row">
                 <button class="btn btn-outline" onclick="closeModal('batchReminderModal')">取消</button>
                 <button class="btn btn-primary" onclick="applyBatchReminders()">🔔 套用提醒</button>
@@ -756,136 +897,913 @@
         // ============================================
         // 景點資料庫（可擴充）
         // ============================================
-        const ATTRACTIONS_DB = {
-            '🇯🇵 東京': {
-                spots: [
-                    { name: '東京鐵塔', type: '景點', location: '東京都港區', time: '09:00-11:00' },
-                    { name: '淺草寺', type: '景點', location: '東京都台東區', time: '10:00-12:00' },
-                    { name: '晴空塔', type: '景點', location: '東京都墨田區', time: '14:00-16:00' },
-                    { name: '涉谷十字路口', type: '景點', location: '東京都渋谷區', time: '15:00-17:00' },
-                    { name: '新宿御苑', type: '景點', location: '東京都新宿區', time: '09:00-11:00' },
-                    { name: '明治神宮', type: '景點', location: '東京都渋谷區', time: '08:00-10:00' },
-                    { name: '秋葉原電器街', type: '購物', location: '東京都千代田區', time: '13:00-17:00' },
-                    { name: '上野動物園', type: '景點', location: '東京都台東區', time: '09:30-14:00' },
-                    { name: '築地市場', type: '美食', location: '東京都中央區', time: '07:00-10:00' },
-                    { name: '原宿竹下通', type: '購物', location: '東京都渋谷區', time: '11:00-15:00' },
-                    { name: '六本木之丘', type: '景點', location: '東京都港區', time: '18:00-21:00' },
-                    { name: '台場海濱公園', type: '景點', location: '東京都港區', time: '14:00-18:00' },
-                ],
-                foods: ['一蘭拉麵', '壽司大', '牛カツもと村', '敘敘苑燒肉', 'AFURI柚子拉麵', '天丼てんや'],
-                defaultSchedule: [
-                    { title: '抵達成田/羽田機場', type: '交通', time: '12:00-14:00' },
-                    { title: '飯店 Check-in', type: '住宿', time: '15:00-16:00' },
-                ]
-            },
-            '🇯🇵 大阪': {
-                spots: [
-                    { name: '大阪城', type: '景點', location: '大阪市中央區', time: '09:00-12:00' },
-                    { name: '道頓堀', type: '美食', location: '大阪市中央區', time: '17:00-21:00' },
-                    { name: '心齋橋', type: '購物', location: '大阪市中央區', time: '13:00-17:00' },
-                    { name: '通天閣', type: '景點', location: '大阪市浪速區', time: '10:00-12:00' },
-                    { name: '黑門市場', type: '美食', location: '大阪市中央區', time: '08:00-11:00' },
-                    { name: '環球影城', type: '景點', location: '大阪市此花區', time: '09:00-20:00' },
-                    { name: '海遊館', type: '景點', location: '大阪市港區', time: '10:00-15:00' },
-                    { name: '梅田空中庭園', type: '景點', location: '大阪市北區', time: '18:00-21:00' },
-                ],
-                foods: ['章魚燒', '大阪燒', '串カツだるま', '蟹道樂', '一蘭拉麵'],
-                defaultSchedule: [
-                    { title: '抵達關西機場', type: '交通', time: '12:00-14:00' },
-                    { title: '搭乘南海電鐵到難波', type: '交通', time: '14:30-15:30' },
-                ]
-            },
-            '🇯🇵 京都': {
-                spots: [
-                    { name: '清水寺', type: '景點', location: '京都市東山區', time: '06:00-09:00' },
-                    { name: '伏見稻荷大社', type: '景點', location: '京都市伏見區', time: '08:00-11:00' },
-                    { name: '金閣寺', type: '景點', location: '京都市北區', time: '09:00-11:00' },
-                    { name: '嵐山竹林', type: '景點', location: '京都市右京區', time: '08:00-12:00' },
-                    { name: '二條城', type: '景點', location: '京都市中京區', time: '09:00-11:00' },
-                    { name: '祇園花見小路', type: '景點', location: '京都市東山區', time: '16:00-19:00' },
-                    { name: '八坂神社', type: '景點', location: '京都市東山區', time: '09:00-10:00' },
-                    { name: '錦市場', type: '美食', location: '京都市中京區', time: '10:00-13:00' },
-                ],
-                foods: ['湯豆腐', '抹茶甜點', '京都拉麵', '懷石料理'],
-                defaultSchedule: []
-            },
-            '🇯🇵 北海道': {
-                spots: [
-                    { name: '小樽運河', type: '景點', location: '小樽市', time: '10:00-14:00' },
-                    { name: '大通公園', type: '景點', location: '札幌市中央區', time: '09:00-11:00' },
-                    { name: '札幌電視塔', type: '景點', location: '札幌市中央區', time: '11:00-13:00' },
-                    { name: '白色戀人公園', type: '景點', location: '札幌市西區', time: '09:00-12:00' },
-                    { name: '狸小路商店街', type: '購物', location: '札幌市中央區', time: '14:00-18:00' },
-                    { name: '二條市場', type: '美食', location: '札幌市中央區', time: '07:00-10:00' },
-                    { name: '富良野花田', type: '景點', location: '富良野市', time: '09:00-15:00' },
-                    { name: '美瑛青池', type: '景點', location: '美瑛町', time: '10:00-12:00' },
-                ],
-                foods: ['成吉思汗烤肉', '味噌拉麵', '海鮮丼', '湯咖哩', '螃蟹料理'],
-                defaultSchedule: []
-            },
-            '🇯🇵 沖繩': {
-                spots: [
-                    { name: '首里城', type: '景點', location: '那霸市', time: '09:00-12:00' },
-                    { name: '國際通', type: '購物', location: '那霸市', time: '14:00-18:00' },
-                    { name: '美麗海水族館', type: '景點', location: '本部町', time: '09:00-15:00' },
-                    { name: '古宇利島', type: '景點', location: '今歸仁村', time: '10:00-14:00' },
-                    { name: '萬座毛', type: '景點', location: '恩納村', time: '15:00-17:00' },
-                    { name: '波上宮', type: '景點', location: '那霸市', time: '09:00-10:00' },
-                ],
-                foods: ['沖繩麵', '海葡萄', '塔可飯', '石垣牛'],
-                defaultSchedule: []
-            },
-            '🇰🇷 首爾': {
-                spots: [
-                    { name: '景福宮', type: '景點', location: '首爾鐘路區', time: '09:00-12:00' },
-                    { name: '北村韓屋村', type: '景點', location: '首爾鐘路區', time: '10:00-12:00' },
-                    { name: '明洞', type: '購物', location: '首爾中區', time: '14:00-18:00' },
-                    { name: 'N首爾塔', type: '景點', location: '首爾龍山區', time: '18:00-21:00' },
-                    { name: '弘大', type: '購物', location: '首爾麻浦區', time: '15:00-20:00' },
-                    { name: '東大門', type: '購物', location: '首爾中區', time: '20:00-24:00' },
-                    { name: '廣藏市場', type: '美食', location: '首爾鐘路區', time: '10:00-13:00' },
-                    { name: '梨花女子大學', type: '景點', location: '首爾西大門區', time: '14:00-16:00' },
-                ],
-                foods: ['韓式烤肉', '部隊鍋', '炸雞啤酒', '人蔘雞湯', '辣炒年糕'],
-                defaultSchedule: []
-            },
-            '🇹🇭 泰國': {
-                spots: [
-                    { name: '大皇宮', type: '景點', location: '曼谷', time: '08:30-12:00' },
-                    { name: '鄭王廟', type: '景點', location: '曼谷', time: '08:00-10:00' },
-                    { name: '恰圖恰週末市場', type: '購物', location: '曼谷', time: '09:00-17:00' },
-                    { name: '考山路', type: '景點', location: '曼谷', time: '18:00-23:00' },
-                    { name: '四面佛', type: '景點', location: '曼谷', time: '09:00-10:00' },
-                    { name: 'Terminal 21', type: '購物', location: '曼谷', time: '11:00-20:00' },
-                    { name: '水上市場', type: '景點', location: '曼谷近郊', time: '07:00-12:00' },
-                ],
-                foods: ['泰式炒河粉', '綠咖哩', '芒果糯米飯', '冬蔭功湯', '泰式奶茶'],
-                defaultSchedule: []
-            },
-            '🇸🇬 新加坡': {
-                spots: [
-                    { name: '魚尾獅公園', type: '景點', location: '濱海灣', time: '09:00-11:00' },
-                    { name: '濱海灣金沙', type: '景點', location: '濱海灣', time: '11:00-14:00' },
-                    { name: '聖淘沙島', type: '景點', location: '聖淘沙', time: '09:00-18:00' },
-                    { name: '牛車水', type: '美食', location: '牛車水', time: '11:00-14:00' },
-                    { name: '小印度', type: '景點', location: '小印度', time: '10:00-12:00' },
-                    { name: '烏節路', type: '購物', location: '烏節', time: '14:00-19:00' },
-                    { name: '濱海灣花園', type: '景點', location: '濱海灣', time: '18:00-21:00' },
-                    { name: '克拉碼頭', type: '美食', location: '克拉碼頭', time: '18:00-22:00' },
-                ],
-                foods: ['海南雞飯', '辣椒螃蟹', '肉骨茶', '沙嗲', '叻沙'],
-                defaultSchedule: []
-            }
-        };
-        
+const ATTRACTIONS_DB = {
+    // ============ 亞洲 (Asia) ============
+    '🇯🇵 東京': {
+        country: '日本', continent: '亞洲', currency: 'JPY',
+        spots: [
+            { name: '東京鐵塔', type: '景點', location: '東京都港區', time: '09:00-11:00' },
+            { name: '淺草寺', type: '景點', location: '東京都台東區', time: '10:00-12:00' },
+            { name: '晴空塔', type: '景點', location: '東京都墨田區', time: '14:00-16:00' },
+            { name: '涉谷十字路口', type: '景點', location: '東京都渋谷區', time: '15:00-17:00' },
+            { name: '新宿御苑', type: '景點', location: '東京都新宿區', time: '09:00-11:00' },
+            { name: '明治神宮', type: '景點', location: '東京都渋谷區', time: '08:00-10:00' },
+            { name: '秋葉原電器街', type: '購物', location: '東京都千代田區', time: '13:00-17:00' },
+            { name: '上野動物園', type: '景點', location: '東京都台東區', time: '09:30-14:00' },
+            { name: '築地市場', type: '美食', location: '東京都中央區', time: '07:00-10:00' },
+            { name: '台場海濱公園', type: '景點', location: '東京都港區', time: '14:00-18:00' }
+        ],
+        foods: ['一蘭拉麵', '壽司大', '牛カツもと村', '敘敘苑燒肉', 'AFURI柚子拉麵', '天丼てんや', '鰻魚飯', '親子丼', '抹茶甜點', '章魚燒'],
+        defaultSchedule: [{ title: '抵達成田/羽田機場', type: '交通', time: '12:00-14:00' }, { title: '飯店 Check-in', type: '住宿', time: '15:00-16:00' }]
+    },
+    '🇯🇵 大阪': {
+        country: '日本', continent: '亞洲', currency: 'JPY',
+        spots: [
+            { name: '大阪城', type: '景點', location: '大阪市中央區', time: '09:00-12:00' },
+            { name: '道頓堀', type: '美食', location: '大阪市中央區', time: '17:00-21:00' },
+            { name: '心齋橋', type: '購物', location: '大阪市中央區', time: '13:00-17:00' },
+            { name: '通天閣', type: '景點', location: '大阪市浪速區', time: '10:00-12:00' },
+            { name: '黑門市場', type: '美食', location: '大阪市中央區', time: '08:00-11:00' },
+            { name: '環球影城', type: '景點', location: '大阪市此花區', time: '09:00-20:00' },
+            { name: '海遊館', type: '景點', location: '大阪市港區', time: '10:00-15:00' },
+            { name: '梅田空中庭園', type: '景點', location: '大阪市北區', time: '18:00-21:00' },
+            { name: '天王寺動物園', type: '景點', location: '大阪市天王寺區', time: '09:30-14:00' },
+            { name: '難波公園', type: '購物', location: '大阪市浪速區', time: '11:00-18:00' }
+        ],
+        foods: ['章魚燒', '大阪燒', '串カツだるま', '蟹道樂', '一蘭拉麵', '金龍拉麵', '551蓬萊肉包', '自由軒咖哩', '炸豬排', '烏龍麵'],
+        defaultSchedule: [{ title: '抵達關西機場', type: '交通', time: '12:00-14:00' }]
+    },
+    '🇯🇵 京都': {
+        country: '日本', continent: '亞洲', currency: 'JPY',
+        spots: [
+            { name: '清水寺', type: '景點', location: '京都市東山區', time: '06:00-09:00' },
+            { name: '伏見稻荷大社', type: '景點', location: '京都市伏見區', time: '08:00-11:00' },
+            { name: '金閣寺', type: '景點', location: '京都市北區', time: '09:00-11:00' },
+            { name: '嵐山竹林', type: '景點', location: '京都市右京區', time: '08:00-12:00' },
+            { name: '二條城', type: '景點', location: '京都市中京區', time: '09:00-11:00' },
+            { name: '祇園花見小路', type: '景點', location: '京都市東山區', time: '16:00-19:00' },
+            { name: '八坂神社', type: '景點', location: '京都市東山區', time: '09:00-10:00' },
+            { name: '錦市場', type: '美食', location: '京都市中京區', time: '10:00-13:00' },
+            { name: '銀閣寺', type: '景點', location: '京都市左京區', time: '09:00-11:00' },
+            { name: '哲學之道', type: '景點', location: '京都市左京區', time: '14:00-16:00' }
+        ],
+        foods: ['湯豆腐', '抹茶甜點', '京都拉麵', '懷石料理', '漬物', '八橋餅', '宇治抹茶', '鯖魚壽司', '湯葉', '京野菜'],
+        defaultSchedule: []
+    },
+    '🇯🇵 北海道': {
+        country: '日本', continent: '亞洲', currency: 'JPY',
+        spots: [
+            { name: '小樽運河', type: '景點', location: '小樽市', time: '10:00-14:00' },
+            { name: '大通公園', type: '景點', location: '札幌市中央區', time: '09:00-11:00' },
+            { name: '札幌電視塔', type: '景點', location: '札幌市中央區', time: '11:00-13:00' },
+            { name: '白色戀人公園', type: '景點', location: '札幌市西區', time: '09:00-12:00' },
+            { name: '狸小路商店街', type: '購物', location: '札幌市中央區', time: '14:00-18:00' },
+            { name: '二條市場', type: '美食', location: '札幌市中央區', time: '07:00-10:00' },
+            { name: '富良野花田', type: '景點', location: '富良野市', time: '09:00-15:00' },
+            { name: '美瑛青池', type: '景點', location: '美瑛町', time: '10:00-12:00' },
+            { name: '函館山夜景', type: '景點', location: '函館市', time: '18:00-21:00' },
+            { name: '登別地獄谷', type: '景點', location: '登別市', time: '09:00-12:00' }
+        ],
+        foods: ['成吉思汗烤肉', '味噌拉麵', '海鮮丼', '湯咖哩', '螃蟹料理', '白色戀人', '夕張哈密瓜', '烤玉米', '奶油馬鈴薯', '海膽'],
+        defaultSchedule: []
+    },
+    '🇯🇵 沖繩': {
+        country: '日本', continent: '亞洲', currency: 'JPY',
+        spots: [
+            { name: '首里城', type: '景點', location: '那霸市', time: '09:00-12:00' },
+            { name: '國際通', type: '購物', location: '那霸市', time: '14:00-18:00' },
+            { name: '美麗海水族館', type: '景點', location: '本部町', time: '09:00-15:00' },
+            { name: '古宇利島', type: '景點', location: '今歸仁村', time: '10:00-14:00' },
+            { name: '萬座毛', type: '景點', location: '恩納村', time: '15:00-17:00' },
+            { name: '波上宮', type: '景點', location: '那霸市', time: '09:00-10:00' },
+            { name: '石垣島', type: '景點', location: '石垣市', time: '09:00-17:00' },
+            { name: '青之洞窟', type: '景點', location: '恩納村', time: '10:00-12:00' },
+            { name: '玉泉洞', type: '景點', location: '南城市', time: '09:00-12:00' },
+            { name: '瀨長島', type: '景點', location: '豐見城市', time: '16:00-19:00' }
+        ],
+        foods: ['沖繩麵', '海葡萄', '塔可飯', '石垣牛', '苦瓜炒蛋', '紅芋塔', '泡盛', '豬腳', '沖繩黑糖', '海鮮'],
+        defaultSchedule: []
+    },
+    '🇰🇷 首爾': {
+        country: '韓國', continent: '亞洲', currency: 'KRW',
+        spots: [
+            { name: '景福宮', type: '景點', location: '首爾鐘路區', time: '09:00-12:00' },
+            { name: '北村韓屋村', type: '景點', location: '首爾鐘路區', time: '10:00-12:00' },
+            { name: '明洞', type: '購物', location: '首爾中區', time: '14:00-18:00' },
+            { name: 'N首爾塔', type: '景點', location: '首爾龍山區', time: '18:00-21:00' },
+            { name: '弘大', type: '購物', location: '首爾麻浦區', time: '15:00-20:00' },
+            { name: '東大門', type: '購物', location: '首爾中區', time: '20:00-24:00' },
+            { name: '廣藏市場', type: '美食', location: '首爾鐘路區', time: '10:00-13:00' },
+            { name: '梨花女子大學', type: '景點', location: '首爾西大門區', time: '14:00-16:00' },
+            { name: '昌德宮', type: '景點', location: '首爾鐘路區', time: '09:00-11:00' },
+            { name: '汝矣島', type: '景點', location: '首爾永登浦區', time: '15:00-18:00' }
+        ],
+        foods: ['韓式烤肉', '部隊鍋', '炸雞啤酒', '人蔘雞湯', '辣炒年糕', '石鍋拌飯', '冷麵', '豬腳', '韓式炸醬麵', '紫菜飯捲'],
+        defaultSchedule: [{ title: '抵達仁川機場', type: '交通', time: '12:00-14:00' }]
+    },
+    '🇰🇷 釜山': {
+        country: '韓國', continent: '亞洲', currency: 'KRW',
+        spots: [
+            { name: '海雲台海水浴場', type: '景點', location: '釜山海雲台區', time: '09:00-12:00' },
+            { name: '甘川文化村', type: '景點', location: '釜山沙下區', time: '10:00-13:00' },
+            { name: '西面', type: '購物', location: '釜山釜山鎮區', time: '14:00-18:00' },
+            { name: '札嘎其市場', type: '美食', location: '釜山中區', time: '08:00-11:00' },
+            { name: '廣安大橋', type: '景點', location: '釜山水營區', time: '18:00-21:00' },
+            { name: '龍頭山公園', type: '景點', location: '釜山中區', time: '09:00-11:00' },
+            { name: '太宗台', type: '景點', location: '釜山影島區', time: '10:00-14:00' },
+            { name: '海東龍宮寺', type: '景點', location: '釜山機張郡', time: '08:00-11:00' },
+            { name: '梵魚寺', type: '景點', location: '釜山金井區', time: '09:00-12:00' },
+            { name: 'BIFF廣場', type: '購物', location: '釜山中區', time: '15:00-19:00' }
+        ],
+        foods: ['豬肉湯飯', '生魚片', '烤腸', '魚糕', '黑輪', '海鮮煎餅', '烤鯖魚', '刀削麵', '紅豆冰', '奶奶湯飯'],
+        defaultSchedule: []
+    },
+    '🇰🇷 濟州島': {
+        country: '韓國', continent: '亞洲', currency: 'KRW',
+        spots: [
+            { name: '城山日出峰', type: '景點', location: '濟州西歸浦市', time: '05:00-08:00' },
+            { name: '漢拏山', type: '景點', location: '濟州市', time: '06:00-14:00' },
+            { name: '天帝淵瀑布', type: '景點', location: '濟州西歸浦市', time: '09:00-11:00' },
+            { name: '牛島', type: '景點', location: '濟州市', time: '09:00-16:00' },
+            { name: '涉地可支', type: '景點', location: '濟州西歸浦市', time: '09:00-12:00' },
+            { name: '東門市場', type: '美食', location: '濟州市', time: '10:00-13:00' },
+            { name: '萬丈窟', type: '景點', location: '濟州市', time: '09:00-11:00' },
+            { name: '中文觀光園區', type: '景點', location: '濟州西歸浦市', time: '10:00-16:00' },
+            { name: '山君不離', type: '景點', location: '濟州市', time: '09:00-11:00' },
+            { name: '龍頭岩', type: '景點', location: '濟州市', time: '16:00-18:00' }
+        ],
+        foods: ['黑豬肉烤肉', '海鮮鍋', '鮑魚粥', '橘子', '生魚片', '帶魚', '烤帶魚', '海膽湯', '豬肉麵', '綠茶'],
+        defaultSchedule: []
+    },
+    '🇹🇭 曼谷': {
+        country: '泰國', continent: '亞洲', currency: 'THB',
+        spots: [
+            { name: '大皇宮', type: '景點', location: '曼谷', time: '08:30-12:00' },
+            { name: '鄭王廟', type: '景點', location: '曼谷', time: '08:00-10:00' },
+            { name: '恰圖恰週末市場', type: '購物', location: '曼谷', time: '09:00-17:00' },
+            { name: '考山路', type: '景點', location: '曼谷', time: '18:00-23:00' },
+            { name: '四面佛', type: '景點', location: '曼谷', time: '09:00-10:00' },
+            { name: 'Terminal 21', type: '購物', location: '曼谷', time: '11:00-20:00' },
+            { name: '水上市場', type: '景點', location: '曼谷近郊', time: '07:00-12:00' },
+            { name: '臥佛寺', type: '景點', location: '曼谷', time: '08:00-10:00' },
+            { name: 'Asiatique河濱夜市', type: '購物', location: '曼谷', time: '17:00-23:00' },
+            { name: '金山寺', type: '景點', location: '曼谷', time: '08:00-10:00' }
+        ],
+        foods: ['泰式炒河粉', '綠咖哩', '芒果糯米飯', '冬蔭功湯', '泰式奶茶', '打拋豬肉飯', '椰子冰淇淋', '烤肉串', '青木瓜沙拉', '香蕉煎餅'],
+        defaultSchedule: []
+    },
+    '🇹🇭 清邁': {
+        country: '泰國', continent: '亞洲', currency: 'THB',
+        spots: [
+            { name: '素帖山雙龍寺', type: '景點', location: '清邁', time: '08:00-11:00' },
+            { name: '清邁古城', type: '景點', location: '清邁', time: '09:00-12:00' },
+            { name: '週日夜市', type: '購物', location: '清邁', time: '16:00-22:00' },
+            { name: '大象自然公園', type: '景點', location: '清邁', time: '08:00-15:00' },
+            { name: '寧曼路', type: '購物', location: '清邁', time: '11:00-20:00' },
+            { name: '契迪龍寺', type: '景點', location: '清邁', time: '08:00-10:00' },
+            { name: '清邁夜間動物園', type: '景點', location: '清邁', time: '18:00-22:00' },
+            { name: '帕辛寺', type: '景點', location: '清邁', time: '06:00-08:00' },
+            { name: '瓦洛洛市場', type: '美食', location: '清邁', time: '06:00-12:00' },
+            { name: '蒲屏皇宮', type: '景點', location: '清邁', time: '09:00-12:00' }
+        ],
+        foods: ['咖哩麵', '炸豬皮', '青辣椒醬', '香腸', '泰北烤雞', '竹筒飯', '涼拌肉末', '泰式米粉湯', '清邁沙嗲', '芒果冰沙'],
+        defaultSchedule: []
+    },
+    '🇹🇭 普吉島': {
+        country: '泰國', continent: '亞洲', currency: 'THB',
+        spots: [
+            { name: '巴東海灘', type: '景點', location: '普吉島', time: '09:00-17:00' },
+            { name: '卡倫海灘', type: '景點', location: '普吉島', time: '09:00-17:00' },
+            { name: '普吉老城區', type: '景點', location: '普吉島', time: '10:00-14:00' },
+            { name: '查龍寺', type: '景點', location: '普吉島', time: '08:00-10:00' },
+            { name: '芭東夜市', type: '購物', location: '普吉島', time: '18:00-23:00' },
+            { name: '攀牙灣', type: '景點', location: '普吉島', time: '08:00-16:00' },
+            { name: '皮皮島', type: '景點', location: '普吉島', time: '07:00-17:00' },
+            { name: '卡塔海灘', type: '景點', location: '普吉島', time: '09:00-17:00' },
+            { name: '普吉大佛', type: '景點', location: '普吉島', time: '08:00-10:00' },
+            { name: '幻多奇樂園', type: '景點', location: '普吉島', time: '17:00-23:00' }
+        ],
+        foods: ['海鮮大餐', '泰式炒飯', '鳳梨炒飯', '烤海鮮', '椰子冰', '涼拌海鮮', '咖哩蟹', '炒空心菜', '椰漿雞湯', '泰式春捲'],
+        defaultSchedule: []
+    },
+    '🇸🇬 新加坡': {
+        country: '新加坡', continent: '亞洲', currency: 'SGD',
+        spots: [
+            { name: '魚尾獅公園', type: '景點', location: '濱海灣', time: '09:00-11:00' },
+            { name: '濱海灣金沙', type: '景點', location: '濱海灣', time: '11:00-14:00' },
+            { name: '聖淘沙島', type: '景點', location: '聖淘沙', time: '09:00-18:00' },
+            { name: '牛車水', type: '美食', location: '牛車水', time: '11:00-14:00' },
+            { name: '小印度', type: '景點', location: '小印度', time: '10:00-12:00' },
+            { name: '烏節路', type: '購物', location: '烏節', time: '14:00-19:00' },
+            { name: '濱海灣花園', type: '景點', location: '濱海灣', time: '18:00-21:00' },
+            { name: '克拉碼頭', type: '美食', location: '克拉碼頭', time: '18:00-22:00' },
+            { name: '新加坡動物園', type: '景點', location: '萬禮', time: '08:30-16:00' },
+            { name: '環球影城', type: '景點', location: '聖淘沙', time: '10:00-19:00' }
+        ],
+        foods: ['海南雞飯', '辣椒螃蟹', '肉骨茶', '沙嗲', '叻沙', '炒粿條', '咖椰吐司', '榴槤', '羅惹', '福建蝦麵'],
+        defaultSchedule: []
+    },
+    '🇻🇳 河內': {
+        country: '越南', continent: '亞洲', currency: 'VND',
+        spots: [
+            { name: '還劍湖', type: '景點', location: '河內', time: '07:00-09:00' },
+            { name: '胡志明紀念堂', type: '景點', location: '河內', time: '08:00-11:00' },
+            { name: '三十六古街', type: '購物', location: '河內', time: '10:00-18:00' },
+            { name: '文廟', type: '景點', location: '河內', time: '08:00-10:00' },
+            { name: '西湖', type: '景點', location: '河內', time: '16:00-18:00' },
+            { name: '河內大教堂', type: '景點', location: '河內', time: '09:00-10:00' },
+            { name: '火爐監獄', type: '景點', location: '河內', time: '08:00-11:00' },
+            { name: '河內歌劇院', type: '景點', location: '河內', time: '19:00-21:00' },
+            { name: '水上木偶戲', type: '景點', location: '河內', time: '17:00-18:00' },
+            { name: '龍邊橋', type: '景點', location: '河內', time: '18:00-20:00' }
+        ],
+        foods: ['河粉', '春捲', '越南咖啡', '法國麵包', '烤肉米粉', '雞蛋咖啡', '河內烤肉', '蟹肉米粉', '炸春捲', '甘蔗蝦'],
+        defaultSchedule: []
+    },
+    '🇻🇳 胡志明市': {
+        country: '越南', continent: '亞洲', currency: 'VND',
+        spots: [
+            { name: '統一宮', type: '景點', location: '胡志明市', time: '08:00-11:00' },
+            { name: '濱城市場', type: '購物', location: '胡志明市', time: '07:00-18:00' },
+            { name: '西貢聖母大教堂', type: '景點', location: '胡志明市', time: '08:00-10:00' },
+            { name: '古芝地道', type: '景點', location: '胡志明市郊', time: '08:00-14:00' },
+            { name: '戰爭遺跡博物館', type: '景點', location: '胡志明市', time: '08:00-12:00' },
+            { name: '范五老街', type: '購物', location: '胡志明市', time: '18:00-23:00' },
+            { name: '西貢中央郵局', type: '景點', location: '胡志明市', time: '08:00-10:00' },
+            { name: '金融塔觀景台', type: '景點', location: '胡志明市', time: '09:30-21:00' },
+            { name: '平西市場', type: '購物', location: '胡志明市', time: '06:00-18:00' },
+            { name: '永嚴寺', type: '景點', location: '胡志明市', time: '08:00-17:00' }
+        ],
+        foods: ['碎肉飯', '牛肉河粉', '越南三明治', '生春捲', '越南煎餅', '甘蔗汁', '滴漏咖啡', '涼拌青木瓜', '蓮子甜湯', '椰子冰淇淋'],
+        defaultSchedule: []
+    },
+    '🇭🇰 香港': {
+        country: '香港', continent: '亞洲', currency: 'HKD',
+        spots: [
+            { name: '維多利亞港', type: '景點', location: '尖沙咀', time: '19:00-21:00' },
+            { name: '太平山頂', type: '景點', location: '中環', time: '18:00-21:00' },
+            { name: '迪士尼樂園', type: '景點', location: '大嶼山', time: '10:00-20:00' },
+            { name: '旺角', type: '購物', location: '旺角', time: '14:00-22:00' },
+            { name: '廟街夜市', type: '購物', location: '油麻地', time: '18:00-23:00' },
+            { name: '天壇大佛', type: '景點', location: '大嶼山', time: '10:00-14:00' },
+            { name: '海洋公園', type: '景點', location: '南區', time: '10:00-19:00' },
+            { name: '蘭桂坊', type: '景點', location: '中環', time: '20:00-02:00' },
+            { name: '星光大道', type: '景點', location: '尖沙咀', time: '19:00-21:00' },
+            { name: '黃大仙祠', type: '景點', location: '黃大仙', time: '07:00-17:30' }
+        ],
+        foods: ['燒臘', '港式點心', '雲吞麵', '絲襪奶茶', '菠蘿油', '蛋撻', '煲仔飯', '避風塘炒蟹', '魚蛋', '楊枝甘露'],
+        defaultSchedule: []
+    },
+    '🇲🇴 澳門': {
+        country: '澳門', continent: '亞洲', currency: 'MOP',
+        spots: [
+            { name: '大三巴牌坊', type: '景點', location: '澳門半島', time: '09:00-18:00' },
+            { name: '威尼斯人', type: '購物', location: '路氹城', time: '10:00-23:00' },
+            { name: '議事亭前地', type: '景點', location: '澳門半島', time: '10:00-18:00' },
+            { name: '澳門旅遊塔', type: '景點', location: '南灣', time: '10:00-21:00' },
+            { name: '媽閣廟', type: '景點', location: '澳門半島', time: '07:00-18:00' },
+            { name: '官也街', type: '美食', location: '氹仔', time: '10:00-22:00' },
+            { name: '新濠天地', type: '景點', location: '路氹城', time: '10:00-23:00' },
+            { name: '東望洋燈塔', type: '景點', location: '澳門半島', time: '09:00-17:30' },
+            { name: '龍環葡韻', type: '景點', location: '氹仔', time: '10:00-19:00' },
+            { name: '路環', type: '景點', location: '路環', time: '10:00-18:00' }
+        ],
+        foods: ['葡式蛋撻', '豬扒包', '水蟹粥', '木糠布甸', '葡國雞', '非洲雞', '竹昇麵', '雙皮奶', '杏仁餅', '牛雜'],
+        defaultSchedule: []
+    },
+    '🇲🇾 吉隆坡': {
+        country: '馬來西亞', continent: '亞洲', currency: 'MYR',
+        spots: [
+            { name: '雙峰塔', type: '景點', location: '吉隆坡', time: '09:00-21:00' },
+            { name: '茨廠街', type: '購物', location: '吉隆坡', time: '10:00-22:00' },
+            { name: '黑風洞', type: '景點', location: '吉隆坡', time: '06:00-19:00' },
+            { name: '獨立廣場', type: '景點', location: '吉隆坡', time: '09:00-18:00' },
+            { name: '阿羅街', type: '美食', location: '吉隆坡', time: '17:00-02:00' },
+            { name: '國家清真寺', type: '景點', location: '吉隆坡', time: '09:00-18:00' },
+            { name: '中央藝術坊', type: '購物', location: '吉隆坡', time: '10:00-21:00' },
+            { name: '吉隆坡塔', type: '景點', location: '吉隆坡', time: '09:00-22:00' },
+            { name: '國家皇宮', type: '景點', location: '吉隆坡', time: '09:00-17:00' },
+            { name: '武吉免登', type: '購物', location: '吉隆坡', time: '10:00-22:00' }
+        ],
+        foods: ['椰漿飯', '沙嗲', '肉骨茶', '炒粿條', '叻沙', '雲吞麵', '印度煎餅', '榴槤', '拉茶', '咖哩麵'],
+        defaultSchedule: []
+    },
+    '🇮🇩 峇里島': {
+        country: '印尼', continent: '亞洲', currency: 'IDR',
+        spots: [
+            { name: '烏布皇宮', type: '景點', location: '烏布', time: '08:00-17:00' },
+            { name: '海神廟', type: '景點', location: '塔巴南', time: '06:00-19:00' },
+            { name: '聖猴森林公園', type: '景點', location: '烏布', time: '08:30-18:00' },
+            { name: '德格拉朗梯田', type: '景點', location: '烏布', time: '08:00-18:00' },
+            { name: '庫塔海灘', type: '景點', location: '庫塔', time: '07:00-19:00' },
+            { name: '烏魯瓦圖斷崖', type: '景點', location: '烏魯瓦圖', time: '09:00-19:00' },
+            { name: '水神廟', type: '景點', location: '塔巴南', time: '08:00-18:00' },
+            { name: '金巴蘭海灘', type: '景點', location: '金巴蘭', time: '17:00-19:00' },
+            { name: '聖泉寺', type: '景點', location: '坦帕西林', time: '08:00-18:00' },
+            { name: '努沙杜瓦海灘', type: '景點', location: '努沙杜瓦', time: '09:00-17:00' }
+        ],
+        foods: ['髒鴨飯', '沙嗲', '印尼炒飯', '巴比豬肋排', '加多加多', '蘇多雞湯', '烤乳豬', '黃薑飯', '印尼炒麵', '椰子冰'],
+        defaultSchedule: []
+    },
+    '🇵🇭 長灘島': {
+        country: '菲律賓', continent: '亞洲', currency: 'PHP',
+        spots: [
+            { name: '白沙灘', type: '景點', location: '長灘島', time: '06:00-18:00' },
+            { name: 'D Mall', type: '購物', location: '長灘島', time: '10:00-22:00' },
+            { name: '普卡海灘', type: '景點', location: '長灘島', time: '08:00-17:00' },
+            { name: '盧霍山', type: '景點', location: '長灘島', time: '15:00-18:00' },
+            { name: '星期五海灘', type: '景點', location: '長灘島', time: '09:00-17:00' },
+            { name: '阿里埃爾角', type: '景點', location: '長灘島', time: '08:00-17:00' },
+            { name: '水晶洞', type: '景點', location: '長灘島', time: '09:00-15:00' },
+            { name: '蝙蝠洞', type: '景點', location: '長灘島', time: '16:00-18:00' },
+            { name: 'Talipapa市場', type: '美食', location: '長灘島', time: '08:00-20:00' },
+            { name: '布拉波海灘', type: '景點', location: '長灘島', time: '09:00-17:00' }
+        ],
+        foods: ['烤乳豬', '牛骨湯', '醋燜豬肉', '海鮮', '芒果冰沙', '炸香蕉', 'Halo-Halo', '烤魷魚', '菲式鐵板', '椰子水'],
+        defaultSchedule: []
+    },
+    '🇨🇳 上海': {
+        country: '中國', continent: '亞洲', currency: 'CNY',
+        spots: [
+            { name: '外灘', type: '景點', location: '上海黃浦區', time: '18:00-22:00' },
+            { name: '東方明珠塔', type: '景點', location: '上海浦東新區', time: '08:00-21:30' },
+            { name: '城隍廟', type: '景點', location: '上海黃浦區', time: '08:30-16:30' },
+            { name: '南京路步行街', type: '購物', location: '上海黃浦區', time: '10:00-22:00' },
+            { name: '田子坊', type: '購物', location: '上海黃浦區', time: '10:00-22:00' },
+            { name: '上海迪士尼', type: '景點', location: '上海浦東新區', time: '08:00-20:00' },
+            { name: '豫園', type: '景點', location: '上海黃浦區', time: '08:30-17:00' },
+            { name: '新天地', type: '購物', location: '上海黃浦區', time: '10:00-24:00' },
+            { name: '靜安寺', type: '景點', location: '上海靜安區', time: '07:30-17:00' },
+            { name: '朱家角古鎮', type: '景點', location: '上海青浦區', time: '08:00-17:00' }
+        ],
+        foods: ['小籠包', '生煎包', '蔥油拌麵', '紅燒肉', '大閘蟹', '白斬雞', '糖醋排骨', '醬鴨', '油爆蝦', '八寶飯'],
+        defaultSchedule: []
+    },
+    '🇨🇳 北京': {
+        country: '中國', continent: '亞洲', currency: 'CNY',
+        spots: [
+            { name: '故宮', type: '景點', location: '北京東城區', time: '08:30-17:00' },
+            { name: '長城', type: '景點', location: '北京延慶區', time: '07:30-17:30' },
+            { name: '天安門廣場', type: '景點', location: '北京東城區', time: '05:00-22:00' },
+            { name: '頤和園', type: '景點', location: '北京海淀區', time: '06:30-18:00' },
+            { name: '天壇', type: '景點', location: '北京東城區', time: '06:00-21:00' },
+            { name: '什剎海', type: '景點', location: '北京西城區', time: '全天' },
+            { name: '南鑼鼓巷', type: '購物', location: '北京東城區', time: '10:00-22:00' },
+            { name: '798藝術區', type: '景點', location: '北京朝陽區', time: '10:00-18:00' },
+            { name: '鳥巢', type: '景點', location: '北京朝陽區', time: '09:00-21:00' },
+            { name: '王府井', type: '購物', location: '北京東城區', time: '09:00-22:00' }
+        ],
+        foods: ['北京烤鴨', '炸醬麵', '涮羊肉', '豆汁', '驢打滾', '冰糖葫蘆', '京醬肉絲', '宮保雞丁', '麻豆腐', '爆肚'],
+        defaultSchedule: []
+    },
+
+    // ============ 歐洲 (Europe) ============
+    '🇫🇷 巴黎': {
+        country: '法國', continent: '歐洲', currency: 'EUR',
+        spots: [
+            { name: '艾菲爾鐵塔', type: '景點', location: '巴黎第七區', time: '09:00-00:00' },
+            { name: '羅浮宮', type: '景點', location: '巴黎第一區', time: '09:00-18:00' },
+            { name: '凱旋門', type: '景點', location: '巴黎第八區', time: '10:00-22:30' },
+            { name: '香榭麗舍大道', type: '購物', location: '巴黎第八區', time: '10:00-20:00' },
+            { name: '聖母院', type: '景點', location: '巴黎第四區', time: '08:00-18:45' },
+            { name: '蒙馬特', type: '景點', location: '巴黎第十八區', time: '06:00-22:30' },
+            { name: '凡爾賽宮', type: '景點', location: '凡爾賽', time: '09:00-18:30' },
+            { name: '塞納河遊船', type: '景點', location: '巴黎', time: '10:00-22:00' },
+            { name: '奧賽美術館', type: '景點', location: '巴黎第七區', time: '09:30-18:00' },
+            { name: '拉法葉百貨', type: '購物', location: '巴黎第九區', time: '09:30-20:30' }
+        ],
+        foods: ['法式可頌', '馬卡龍', '法式洋蔥湯', '紅酒燉牛肉', '鵝肝醬', '法式蝸牛', '可麗餅', '法棍麵包', '起司拼盤', '舒芙蕾'],
+        defaultSchedule: []
+    },
+    '🇬🇧 倫敦': {
+        country: '英國', continent: '歐洲', currency: 'GBP',
+        spots: [
+            { name: '大笨鐘', type: '景點', location: '西敏市', time: '全天' },
+            { name: '白金漢宮', type: '景點', location: '西敏市', time: '09:30-19:00' },
+            { name: '倫敦塔', type: '景點', location: '塔哈姆雷特區', time: '09:00-17:30' },
+            { name: '大英博物館', type: '景點', location: '卡姆登區', time: '10:00-17:00' },
+            { name: '倫敦眼', type: '景點', location: '蘭貝斯區', time: '10:00-20:30' },
+            { name: '塔橋', type: '景點', location: '塔哈姆雷特區', time: '09:30-18:00' },
+            { name: '海德公園', type: '景點', location: '西敏市', time: '05:00-00:00' },
+            { name: '柯芬園', type: '購物', location: '西敏市', time: '10:00-20:00' },
+            { name: '牛津街', type: '購物', location: '西敏市', time: '09:30-21:00' },
+            { name: '西敏寺', type: '景點', location: '西敏市', time: '09:30-15:30' }
+        ],
+        foods: ['炸魚薯條', '英式早餐', '烤牛肉', '牧羊人派', '約克郡布丁', '司康餅', '英式下午茶', '康沃爾肉餡餅', '黑布丁', '威靈頓牛排'],
+        defaultSchedule: []
+    },
+    '🇮🇹 羅馬': {
+        country: '義大利', continent: '歐洲', currency: 'EUR',
+        spots: [
+            { name: '羅馬競技場', type: '景點', location: '羅馬', time: '08:30-19:00' },
+            { name: '特雷維噴泉', type: '景點', location: '羅馬', time: '全天' },
+            { name: '西班牙階梯', type: '景點', location: '羅馬', time: '全天' },
+            { name: '梵蒂岡博物館', type: '景點', location: '梵蒂岡', time: '09:00-18:00' },
+            { name: '聖彼得大教堂', type: '景點', location: '梵蒂岡', time: '07:00-19:00' },
+            { name: '萬神殿', type: '景點', location: '羅馬', time: '09:00-19:00' },
+            { name: '古羅馬廣場', type: '景點', location: '羅馬', time: '08:30-19:00' },
+            { name: '納沃納廣場', type: '景點', location: '羅馬', time: '全天' },
+            { name: '博爾蓋塞美術館', type: '景點', location: '羅馬', time: '09:00-19:00' },
+            { name: '真理之口', type: '景點', location: '羅馬', time: '09:30-17:50' }
+        ],
+        foods: ['義大利麵', '披薩', '提拉米蘇', '義式冰淇淋', '燉飯', '千層麵', '卡布奇諾', '義式火腿', '義式濃縮咖啡', '炸飯球'],
+        defaultSchedule: []
+    },
+    '🇮🇹 威尼斯': {
+        country: '義大利', continent: '歐洲', currency: 'EUR',
+        spots: [
+            { name: '聖馬可廣場', type: '景點', location: '威尼斯', time: '全天' },
+            { name: '聖馬可大教堂', type: '景點', location: '威尼斯', time: '09:30-17:00' },
+            { name: '總督宮', type: '景點', location: '威尼斯', time: '08:30-19:00' },
+            { name: '里亞托橋', type: '景點', location: '威尼斯', time: '全天' },
+            { name: '嘆息橋', type: '景點', location: '威尼斯', time: '全天' },
+            { name: '布拉諾島', type: '景點', location: '威尼斯', time: '09:00-17:00' },
+            { name: '穆拉諾島', type: '景點', location: '威尼斯', time: '09:00-17:00' },
+            { name: '貢多拉遊船', type: '景點', location: '威尼斯', time: '09:00-19:00' },
+            { name: '學院美術館', type: '景點', location: '威尼斯', time: '08:15-19:15' },
+            { name: '聖喬治馬焦雷島', type: '景點', location: '威尼斯', time: '09:00-19:00' }
+        ],
+        foods: ['海鮮義大利麵', '墨魚汁麵', '炸海鮮', '義式烤魚', '威尼斯餅乾', '開胃小點', '義式奶凍', '普羅賽克氣泡酒', '玉米糕', '沙丁魚'],
+        defaultSchedule: []
+    },
+    '🇪🇸 巴塞隆納': {
+        country: '西班牙', continent: '歐洲', currency: 'EUR',
+        spots: [
+            { name: '聖家堂', type: '景點', location: '巴塞隆納', time: '09:00-20:00' },
+            { name: '奎爾公園', type: '景點', location: '巴塞隆納', time: '09:30-19:30' },
+            { name: '蘭布拉大道', type: '購物', location: '巴塞隆納', time: '全天' },
+            { name: '巴特婁之家', type: '景點', location: '巴塞隆納', time: '09:00-21:00' },
+            { name: '米拉之家', type: '景點', location: '巴塞隆納', time: '09:00-20:30' },
+            { name: '哥德區', type: '景點', location: '巴塞隆納', time: '全天' },
+            { name: '波蓋利亞市場', type: '美食', location: '巴塞隆納', time: '08:00-20:30' },
+            { name: '巴塞隆納海灘', type: '景點', location: '巴塞隆納', time: '全天' },
+            { name: '畢卡索美術館', type: '景點', location: '巴塞隆納', time: '10:00-20:00' },
+            { name: '諾坎普球場', type: '景點', location: '巴塞隆納', time: '10:00-18:30' }
+        ],
+        foods: ['西班牙海鮮飯', 'Tapas小菜', '西班牙火腿', '番茄麵包', '烤章魚', '西班牙蛋餅', '油條巧克力', '桑格利亞酒', '西班牙冷湯', '炸可樂餅'],
+        defaultSchedule: []
+    },
+    '🇩🇪 慕尼黑': {
+        country: '德國', continent: '歐洲', currency: 'EUR',
+        spots: [
+            { name: '瑪利亞廣場', type: '景點', location: '慕尼黑', time: '全天' },
+            { name: '新市政廳', type: '景點', location: '慕尼黑', time: '10:00-17:00' },
+            { name: '寧芬堡宮', type: '景點', location: '慕尼黑', time: '09:00-18:00' },
+            { name: '英國花園', type: '景點', location: '慕尼黑', time: '全天' },
+            { name: '皇家啤酒屋', type: '美食', location: '慕尼黑', time: '09:00-23:30' },
+            { name: '寶馬博物館', type: '景點', location: '慕尼黑', time: '10:00-18:00' },
+            { name: '老彼得教堂', type: '景點', location: '慕尼黑', time: '09:00-19:00' },
+            { name: '德意志博物館', type: '景點', location: '慕尼黑', time: '09:00-17:00' },
+            { name: '維克圖阿連市場', type: '美食', location: '慕尼黑', time: '08:00-20:00' },
+            { name: '奧林匹克公園', type: '景點', location: '慕尼黑', time: '全天' }
+        ],
+        foods: ['德國香腸', '烤豬腳', '德國啤酒', '椒鹽脆餅', '酸菜', '德式土豆沙拉', '白香腸', '蘋果捲', '豬排', '馬鈴薯餃子'],
+        defaultSchedule: []
+    },
+    '🇳🇱 阿姆斯特丹': {
+        country: '荷蘭', continent: '歐洲', currency: 'EUR',
+        spots: [
+            { name: '安妮之家', type: '景點', location: '阿姆斯特丹', time: '09:00-22:00' },
+            { name: '梵谷博物館', type: '景點', location: '阿姆斯特丹', time: '09:00-18:00' },
+            { name: '國家博物館', type: '景點', location: '阿姆斯特丹', time: '09:00-17:00' },
+            { name: '水壩廣場', type: '景點', location: '阿姆斯特丹', time: '全天' },
+            { name: '運河遊船', type: '景點', location: '阿姆斯特丹', time: '09:00-22:00' },
+            { name: '紅燈區', type: '景點', location: '阿姆斯特丹', time: '晚上' },
+            { name: '花卉市場', type: '購物', location: '阿姆斯特丹', time: '09:00-17:30' },
+            { name: '庫肯霍夫花園', type: '景點', location: '利瑟', time: '08:00-19:30' },
+            { name: '海尼根體驗館', type: '景點', location: '阿姆斯特丹', time: '10:30-19:30' },
+            { name: '約旦區', type: '景點', location: '阿姆斯特丹', time: '全天' }
+        ],
+        foods: ['荷蘭鬆餅', '荷蘭起司', '薯條', '生鯡魚', '蘋果派', '炸肉丸', '豌豆湯', '荷蘭煎餅', '焦糖餅乾', '可樂餅'],
+        defaultSchedule: []
+    },
+    '🇨🇭 蘇黎世': {
+        country: '瑞士', continent: '歐洲', currency: 'CHF',
+        spots: [
+            { name: '班霍夫大街', type: '購物', location: '蘇黎世', time: '09:00-20:00' },
+            { name: '蘇黎世湖', type: '景點', location: '蘇黎世', time: '全天' },
+            { name: '老城區', type: '景點', location: '蘇黎世', time: '全天' },
+            { name: '蘇黎世大教堂', type: '景點', location: '蘇黎世', time: '10:00-18:00' },
+            { name: '聖母大教堂', type: '景點', location: '蘇黎世', time: '10:00-18:00' },
+            { name: '林登霍夫', type: '景點', location: '蘇黎世', time: '全天' },
+            { name: '瑞士國家博物館', type: '景點', location: '蘇黎世', time: '10:00-17:00' },
+            { name: '動物園', type: '景點', location: '蘇黎世', time: '09:00-18:00' },
+            { name: '萊茵瀑布', type: '景點', location: '沙夫豪森', time: '09:00-19:00' },
+            { name: '玉特利山', type: '景點', location: '蘇黎世', time: '全天' }
+        ],
+        foods: ['起司火鍋', '巧克力', '瑞士乳酪', '拉克雷特起司', '瑞士德國香腸', '馬鈴薯餅', '洋蔥塔', '蘇黎世小牛肉', '辮子麵包', '瑞士巧克力飲品'],
+        defaultSchedule: []
+    },
+    '🇦🇹 維也納': {
+        country: '奧地利', continent: '歐洲', currency: 'EUR',
+        spots: [
+            { name: '美泉宮', type: '景點', location: '維也納', time: '08:00-17:30' },
+            { name: '聖史蒂芬大教堂', type: '景點', location: '維也納', time: '06:00-22:00' },
+            { name: '霍夫堡皇宮', type: '景點', location: '維也納', time: '09:00-17:30' },
+            { name: '普拉特遊樂場', type: '景點', location: '維也納', time: '10:00-00:00' },
+            { name: '維也納國家歌劇院', type: '景點', location: '維也納', time: '導覽時間' },
+            { name: '貝爾維第宮', type: '景點', location: '維也納', time: '09:00-18:00' },
+            { name: '納許市場', type: '美食', location: '維也納', time: '06:00-21:00' },
+            { name: '藝術史博物館', type: '景點', location: '維也納', time: '10:00-18:00' },
+            { name: '百水公寓', type: '景點', location: '維也納', time: '全天' },
+            { name: '環城大道', type: '景點', location: '維也納', time: '全天' }
+        ],
+        foods: ['維也納炸牛排', '蘋果捲', '薩赫蛋糕', '維也納香腸', '塔費爾斯皮茨', '牛肉湯', '帝王煎餅', '杏桃餃子', '維也納咖啡', '奧地利燉牛肉'],
+        defaultSchedule: []
+    },
+    '🇨🇿 布拉格': {
+        country: '捷克', continent: '歐洲', currency: 'CZK',
+        spots: [
+            { name: '查理大橋', type: '景點', location: '布拉格', time: '全天' },
+            { name: '布拉格城堡', type: '景點', location: '布拉格', time: '09:00-17:00' },
+            { name: '老城廣場', type: '景點', location: '布拉格', time: '全天' },
+            { name: '天文鐘', type: '景點', location: '布拉格', time: '09:00-21:00' },
+            { name: '聖維特大教堂', type: '景點', location: '布拉格', time: '09:00-17:00' },
+            { name: '猶太區', type: '景點', location: '布拉格', time: '09:00-18:00' },
+            { name: '佩特任山', type: '景點', location: '布拉格', time: '全天' },
+            { name: '瓦茨拉夫廣場', type: '購物', location: '布拉格', time: '全天' },
+            { name: '跳舞的房子', type: '景點', location: '布拉格', time: '全天' },
+            { name: '小城區', type: '景點', location: '布拉格', time: '全天' }
+        ],
+        foods: ['烤豬膝', '捷克餃子', '捷克啤酒', '燉牛肉', '炸起司', '捷克香腸', '蘋果捲', '煙囪蛋糕', '甜菜湯', '豬肉排'],
+        defaultSchedule: []
+    },
+    '🇬🇷 雅典': {
+        country: '希臘', continent: '歐洲', currency: 'EUR',
+        spots: [
+            { name: '衛城', type: '景點', location: '雅典', time: '08:00-20:00' },
+            { name: '帕德嫩神殿', type: '景點', location: '雅典', time: '08:00-20:00' },
+            { name: '普拉卡區', type: '購物', location: '雅典', time: '全天' },
+            { name: '憲法廣場', type: '景點', location: '雅典', time: '全天' },
+            { name: '衛城博物館', type: '景點', location: '雅典', time: '08:00-20:00' },
+            { name: '宙斯神殿', type: '景點', location: '雅典', time: '08:00-20:00' },
+            { name: '利卡維多斯山', type: '景點', location: '雅典', time: '全天' },
+            { name: '古市集遺址', type: '景點', location: '雅典', time: '08:00-20:00' },
+            { name: '國家考古博物館', type: '景點', location: '雅典', time: '08:00-20:00' },
+            { name: '蒙納斯提拉奇廣場', type: '購物', location: '雅典', time: '全天' }
+        ],
+        foods: ['烤肉串', '穆薩卡', '希臘沙拉', '皮塔餅', '茄子醬', '炸乳酪', '希臘優格', '葡萄葉飯捲', '海鮮', '果仁蜜餅'],
+        defaultSchedule: []
+    },
+    '🇬🇷 聖托里尼': {
+        country: '希臘', continent: '歐洲', currency: 'EUR',
+        spots: [
+            { name: '伊亞日落', type: '景點', location: '聖托里尼', time: '17:00-20:00' },
+            { name: '費拉鎮', type: '景點', location: '聖托里尼', time: '全天' },
+            { name: '藍頂教堂', type: '景點', location: '聖托里尼', time: '全天' },
+            { name: '紅沙灘', type: '景點', location: '聖托里尼', time: '09:00-18:00' },
+            { name: '黑沙灘', type: '景點', location: '聖托里尼', time: '09:00-18:00' },
+            { name: '阿克羅蒂里遺址', type: '景點', location: '聖托里尼', time: '08:00-20:00' },
+            { name: '火山島', type: '景點', location: '聖托里尼', time: '09:00-17:00' },
+            { name: '皮爾戈斯村', type: '景點', location: '聖托里尼', time: '全天' },
+            { name: '酒莊之旅', type: '美食', location: '聖托里尼', time: '10:00-19:00' },
+            { name: '卡馬利海灘', type: '景點', location: '聖托里尼', time: '09:00-18:00' }
+        ],
+        foods: ['烤章魚', '番茄球', '茄子沙拉', '希臘白酒', '海鮮義大利麵', '烤羊肉', '菲達乳酪', '蜂蜜甜點', '橄欖油麵包', '希臘咖啡'],
+        defaultSchedule: []
+    },
+    '🇵🇹 里斯本': {
+        country: '葡萄牙', continent: '歐洲', currency: 'EUR',
+        spots: [
+            { name: '貝倫塔', type: '景點', location: '里斯本', time: '10:00-17:30' },
+            { name: '熱羅尼莫斯修道院', type: '景點', location: '里斯本', time: '10:00-17:30' },
+            { name: '阿法瑪區', type: '景點', location: '里斯本', time: '全天' },
+            { name: '聖喬治城堡', type: '景點', location: '里斯本', time: '09:00-21:00' },
+            { name: '28號電車', type: '景點', location: '里斯本', time: '全天' },
+            { name: '羅西歐廣場', type: '景點', location: '里斯本', time: '全天' },
+            { name: '奧古斯塔街凱旋門', type: '景點', location: '里斯本', time: '09:00-20:00' },
+            { name: '辛特拉宮', type: '景點', location: '辛特拉', time: '09:30-18:30' },
+            { name: 'LX工廠', type: '購物', location: '里斯本', time: '10:00-00:00' },
+            { name: '法朵表演', type: '景點', location: '里斯本', time: '20:00-23:00' }
+        ],
+        foods: ['葡式蛋撻', '烤沙丁魚', '葡式燉雜碎', '巴卡勞鱈魚', '豬扒包', '海鮮飯', '葡式烤雞', '波特酒', '起司蛋糕', '綠湯'],
+        defaultSchedule: []
+    },
+
+    // ============ 北美洲 (North America) ============
+    '🇺🇸 紐約': {
+        country: '美國', continent: '北美洲', currency: 'USD',
+        spots: [
+            { name: '自由女神像', type: '景點', location: '自由島', time: '08:30-16:00' },
+            { name: '時代廣場', type: '景點', location: '曼哈頓', time: '全天' },
+            { name: '中央公園', type: '景點', location: '曼哈頓', time: '06:00-01:00' },
+            { name: '帝國大廈', type: '景點', location: '曼哈頓', time: '10:00-00:00' },
+            { name: '大都會藝術博物館', type: '景點', location: '曼哈頓', time: '10:00-17:00' },
+            { name: '布魯克林大橋', type: '景點', location: '布魯克林', time: '全天' },
+            { name: '第五大道', type: '購物', location: '曼哈頓', time: '10:00-20:00' },
+            { name: '百老匯', type: '景點', location: '曼哈頓', time: '晚上' },
+            { name: '洛克斐勒中心', type: '景點', location: '曼哈頓', time: '08:00-00:00' },
+            { name: '華爾街', type: '景點', location: '曼哈頓', time: '全天' }
+        ],
+        foods: ['紐約披薩', '紐約貝果', '熱狗', '起司蛋糕', '龍蝦', '牛排', '漢堡', '黑白餅乾', '帕斯特拉米三明治', '蘋果派'],
+        defaultSchedule: []
+    },
+    '🇺🇸 洛杉磯': {
+        country: '美國', continent: '北美洲', currency: 'USD',
+        spots: [
+            { name: '好萊塢標誌', type: '景點', location: '好萊塢', time: '全天' },
+            { name: '環球影城', type: '景點', location: '好萊塢', time: '09:00-22:00' },
+            { name: '迪士尼樂園', type: '景點', location: '阿納海姆', time: '08:00-00:00' },
+            { name: '聖塔莫尼卡海灘', type: '景點', location: '聖塔莫尼卡', time: '全天' },
+            { name: '比佛利山莊', type: '購物', location: '比佛利山', time: '10:00-18:00' },
+            { name: '格里菲斯天文台', type: '景點', location: '洛杉磯', time: '12:00-22:00' },
+            { name: '威尼斯海灘', type: '景點', location: '威尼斯', time: '全天' },
+            { name: '好萊塢星光大道', type: '景點', location: '好萊塢', time: '全天' },
+            { name: '蓋蒂中心', type: '景點', location: '洛杉磯', time: '10:00-17:30' },
+            { name: '農夫市場', type: '美食', location: '洛杉磯', time: '09:00-21:00' }
+        ],
+        foods: ['墨西哥捲餅', '漢堡', '壽司', '韓式烤肉', '越南河粉', 'In-N-Out漢堡', '法式沾醬三明治', '炸魚塔可', '加州卷', '果昔碗'],
+        defaultSchedule: []
+    },
+    '🇺🇸 舊金山': {
+        country: '美國', continent: '北美洲', currency: 'USD',
+        spots: [
+            { name: '金門大橋', type: '景點', location: '舊金山', time: '全天' },
+            { name: '漁人碼頭', type: '景點', location: '舊金山', time: '10:00-22:00' },
+            { name: '惡魔島', type: '景點', location: '舊金山灣', time: '09:00-18:30' },
+            { name: '九曲花街', type: '景點', location: '舊金山', time: '全天' },
+            { name: '聯合廣場', type: '購物', location: '舊金山', time: '10:00-20:00' },
+            { name: '唐人街', type: '美食', location: '舊金山', time: '全天' },
+            { name: '纜車', type: '景點', location: '舊金山', time: '06:00-00:30' },
+            { name: '金門公園', type: '景點', location: '舊金山', time: '全天' },
+            { name: '藝術宮', type: '景點', location: '舊金山', time: '全天' },
+            { name: '39號碼頭', type: '景點', location: '舊金山', time: '10:00-21:00' }
+        ],
+        foods: ['酸麵包', '蛤蜊巧達湯', '螃蟹', '海鮮', '愛爾蘭咖啡', '墨西哥捲餅', '點心', '披薩', '有機沙拉', '精品咖啡'],
+        defaultSchedule: []
+    },
+    '🇺🇸 拉斯維加斯': {
+        country: '美國', continent: '北美洲', currency: 'USD',
+        spots: [
+            { name: '拉斯維加斯大道', type: '景點', location: '拉斯維加斯', time: '全天' },
+            { name: '百樂宮噴泉', type: '景點', location: '拉斯維加斯', time: '15:00-00:00' },
+            { name: '威尼斯人酒店', type: '景點', location: '拉斯維加斯', time: '全天' },
+            { name: '弗利蒙街', type: '景點', location: '拉斯維加斯', time: '18:00-02:00' },
+            { name: '大峽谷', type: '景點', location: '亞利桑那州', time: '全天' },
+            { name: '胡佛水壩', type: '景點', location: '內華達州', time: '09:00-17:00' },
+            { name: '太陽劇團', type: '景點', location: '拉斯維加斯', time: '晚上' },
+            { name: '高塔觀景台', type: '景點', location: '拉斯維加斯', time: '10:00-01:00' },
+            { name: 'Caesars Palace', type: '購物', location: '拉斯維加斯', time: '全天' },
+            { name: '紅岩峽谷', type: '景點', location: '拉斯維加斯', time: '06:00-19:00' }
+        ],
+        foods: ['自助餐', '牛排', '龍蝦', '壽司', '漢堡', '炸雞', '中式料理', '義大利餐', '法式料理', '甜點自助'],
+        defaultSchedule: []
+    },
+    '🇺🇸 夏威夷': {
+        country: '美國', continent: '北美洲', currency: 'USD',
+        spots: [
+            { name: '威基基海灘', type: '景點', location: '檀香山', time: '全天' },
+            { name: '珍珠港', type: '景點', location: '檀香山', time: '07:00-17:00' },
+            { name: '鑽石頭山', type: '景點', location: '檀香山', time: '06:00-18:00' },
+            { name: '恐龍灣', type: '景點', location: '歐胡島', time: '06:00-16:00' },
+            { name: '北岸', type: '景點', location: '歐胡島', time: '全天' },
+            { name: '玻里尼西亞文化中心', type: '景點', location: '歐胡島', time: '12:00-21:00' },
+            { name: '伊奧拉尼宮', type: '景點', location: '檀香山', time: '09:00-16:00' },
+            { name: '阿拉莫阿那中心', type: '購物', location: '檀香山', time: '09:30-21:00' },
+            { name: '科納咖啡園', type: '景點', location: '大島', time: '09:00-16:00' },
+            { name: '火山國家公園', type: '景點', location: '大島', time: '全天' }
+        ],
+        foods: ['夏威夷生魚飯', '烤豬肉', '夏威夷飯糰', '刨冰', '鳳梨', '椰子', '蒜蝦飯', '夏威夷漢堡排', '芋頭', '夏威夷果仁'],
+        defaultSchedule: []
+    },
+    '🇨🇦 溫哥華': {
+        country: '加拿大', continent: '北美洲', currency: 'CAD',
+        spots: [
+            { name: '史丹利公園', type: '景點', location: '溫哥華', time: '全天' },
+            { name: '卡皮拉諾吊橋', type: '景點', location: '北溫哥華', time: '09:00-18:00' },
+            { name: '格蘭維爾島', type: '購物', location: '溫哥華', time: '09:00-19:00' },
+            { name: '蓋斯鎮', type: '景點', location: '溫哥華', time: '全天' },
+            { name: '英吉利灣', type: '景點', location: '溫哥華', time: '全天' },
+            { name: '唐人街', type: '美食', location: '溫哥華', time: '全天' },
+            { name: '溫哥華水族館', type: '景點', location: '溫哥華', time: '10:00-17:00' },
+            { name: '羅布森街', type: '購物', location: '溫哥華', time: '10:00-21:00' },
+            { name: '女王公園', type: '景點', location: '溫哥華', time: '全天' },
+            { name: '格勞斯山', type: '景點', location: '北溫哥華', time: '09:00-22:00' }
+        ],
+        foods: ['三文魚', '壽司', '日式拉麵', '炸魚薯條', '龍蝦', '楓糖漿', '肉汁薯條', '希臘料理', '精釀啤酒', '生蠔'],
+        defaultSchedule: []
+    },
+    '🇨🇦 多倫多': {
+        country: '加拿大', continent: '北美洲', currency: 'CAD',
+        spots: [
+            { name: 'CN塔', type: '景點', location: '多倫多', time: '09:00-22:30' },
+            { name: '尼加拉瀑布', type: '景點', location: '尼加拉', time: '全天' },
+            { name: '皇家安大略博物館', type: '景點', location: '多倫多', time: '10:00-17:30' },
+            { name: '聖羅倫斯市場', type: '美食', location: '多倫多', time: '08:00-18:00' },
+            { name: '央街', type: '購物', location: '多倫多', time: '10:00-21:00' },
+            { name: '多倫多群島', type: '景點', location: '多倫多', time: '全天' },
+            { name: '肯辛頓市場', type: '購物', location: '多倫多', time: '09:00-19:00' },
+            { name: '卡薩羅馬城堡', type: '景點', location: '多倫多', time: '09:30-17:00' },
+            { name: '多倫多動物園', type: '景點', location: '多倫多', time: '09:00-16:30' },
+            { name: '安大略美術館', type: '景點', location: '多倫多', time: '10:30-17:00' }
+        ],
+        foods: ['肉汁薯條', '蒙特婁燻肉三明治', '楓糖', '披薩', '希臘料理', '加拿大培根', '奶油塔', '鮮蠔', '牛排', '精釀啤酒'],
+        defaultSchedule: []
+    },
+    '🇲🇽 坎昆': {
+        country: '墨西哥', continent: '北美洲', currency: 'MXN',
+        spots: [
+            { name: '坎昆海灘', type: '景點', location: '坎昆', time: '全天' },
+            { name: '奇琴伊察', type: '景點', location: '尤卡坦', time: '08:00-17:00' },
+            { name: '女人島', type: '景點', location: '坎昆', time: '全天' },
+            { name: '圖盧姆遺址', type: '景點', location: '圖盧姆', time: '08:00-17:00' },
+            { name: '西卡萊特公園', type: '景點', location: '里維埃拉瑪雅', time: '08:30-22:00' },
+            { name: 'La Isla購物村', type: '購物', location: '坎昆', time: '10:00-22:00' },
+            { name: '水下博物館', type: '景點', location: '坎昆', time: '09:00-14:00' },
+            { name: '天然井', type: '景點', location: '尤卡坦', time: '09:00-17:00' },
+            { name: 'Coco Bongo夜店', type: '景點', location: '坎昆', time: '22:00-04:00' },
+            { name: '可可海灘', type: '景點', location: '坎昆', time: '全天' }
+        ],
+        foods: ['塔可', '墨西哥捲餅', '酪梨醬', '墨西哥辣椒', '莫雷醬', '炸玉米餅', '玉米粥', '龍舌蘭酒', '海鮮湯', '墨西哥三明治'],
+        defaultSchedule: []
+    },
+
+    // ============ 大洋洲 (Oceania) ============
+    '🇦🇺 雪梨': {
+        country: '澳洲', continent: '大洋洲', currency: 'AUD',
+        spots: [
+            { name: '雪梨歌劇院', type: '景點', location: '雪梨', time: '09:00-17:00' },
+            { name: '雪梨海港大橋', type: '景點', location: '雪梨', time: '全天' },
+            { name: '邦迪海灘', type: '景點', location: '雪梨', time: '全天' },
+            { name: '達令港', type: '景點', location: '雪梨', time: '全天' },
+            { name: '塔隆加動物園', type: '景點', location: '雪梨', time: '09:30-17:00' },
+            { name: '岩石區', type: '購物', location: '雪梨', time: '10:00-18:00' },
+            { name: '皇家植物園', type: '景點', location: '雪梨', time: '07:00-18:00' },
+            { name: '曼利海灘', type: '景點', location: '雪梨', time: '全天' },
+            { name: '藍山', type: '景點', location: '藍山', time: '全天' },
+            { name: '雪梨塔', type: '景點', location: '雪梨', time: '09:00-22:00' }
+        ],
+        foods: ['澳洲牛排', '肉派', '炸魚薯條', '袋鼠肉', '提姆塔姆餅乾', '維吉麥', '鱷魚肉', '拉明頓蛋糕', '澳洲咖啡', '肉卷'],
+        defaultSchedule: []
+    },
+    '🇦🇺 墨爾本': {
+        country: '澳洲', continent: '大洋洲', currency: 'AUD',
+        spots: [
+            { name: '聯邦廣場', type: '景點', location: '墨爾本', time: '全天' },
+            { name: '皇家拱廊', type: '購物', location: '墨爾本', time: '09:00-18:00' },
+            { name: '尤里卡88觀景台', type: '景點', location: '墨爾本', time: '10:00-22:00' },
+            { name: '大洋路', type: '景點', location: '維多利亞州', time: '全天' },
+            { name: '墨爾本動物園', type: '景點', location: '墨爾本', time: '09:00-17:00' },
+            { name: '弗林德斯街車站', type: '景點', location: '墨爾本', time: '全天' },
+            { name: '皇冠賭場', type: '景點', location: '墨爾本', time: '全天' },
+            { name: '塗鴉巷', type: '景點', location: '墨爾本', time: '全天' },
+            { name: '維多利亞女王市場', type: '美食', location: '墨爾本', time: '06:00-14:00' },
+            { name: '菲利普島企鵝', type: '景點', location: '菲利普島', time: '17:00-20:00' }
+        ],
+        foods: ['咖啡', '肉派', '蘇夫蕾煎餅', '牛排', '亞洲融合料理', '希臘菜', '義大利餐', '精釀啤酒', '海鮮', '拉明頓蛋糕'],
+        defaultSchedule: []
+    },
+    '🇳🇿 奧克蘭': {
+        country: '紐西蘭', continent: '大洋洲', currency: 'NZD',
+        spots: [
+            { name: '天空塔', type: '景點', location: '奧克蘭', time: '08:30-22:30' },
+            { name: '奧克蘭港', type: '景點', location: '奧克蘭', time: '全天' },
+            { name: '伊甸山', type: '景點', location: '奧克蘭', time: '07:00-20:30' },
+            { name: '皇后街', type: '購物', location: '奧克蘭', time: '09:00-18:00' },
+            { name: '使命灣', type: '景點', location: '奧克蘭', time: '全天' },
+            { name: '奧克蘭博物館', type: '景點', location: '奧克蘭', time: '10:00-17:00' },
+            { name: '懷希基島', type: '景點', location: '奧克蘭', time: '全天' },
+            { name: '凱利塔頓水族館', type: '景點', location: '奧克蘭', time: '09:30-17:00' },
+            { name: '北岬', type: '景點', location: '奧克蘭', time: '全天' },
+            { name: '朗伊托托島', type: '景點', location: '奧克蘭', time: '全天' }
+        ],
+        foods: ['羊肉', '綠唇貽貝', '肉派', '奇異果', '白雲石奶油', '帕瓦洛瓦蛋糕', '燉羊肉', '海鮮', '紐西蘭葡萄酒', '漢吉料理'],
+        defaultSchedule: []
+    },
+    '🇳🇿 皇后鎮': {
+        country: '紐西蘭', continent: '大洋洲', currency: 'NZD',
+        spots: [
+            { name: '米爾福德峽灣', type: '景點', location: '皇后鎮', time: '全天' },
+            { name: '天空纜車', type: '景點', location: '皇后鎮', time: '09:00-21:00' },
+            { name: '瓦卡蒂普湖', type: '景點', location: '皇后鎮', time: '全天' },
+            { name: '格林諾奇', type: '景點', location: '皇后鎮', time: '全天' },
+            { name: '箭鎮', type: '景點', location: '皇后鎮', time: '全天' },
+            { name: '峽灣噴射快艇', type: '景點', location: '皇后鎮', time: '09:00-17:00' },
+            { name: '高空彈跳', type: '景點', location: '皇后鎮', time: '09:00-17:00' },
+            { name: '滑翔傘', type: '景點', location: '皇后鎮', time: '09:00-17:00' },
+            { name: '弗格漢堡', type: '美食', location: '皇后鎮', time: '08:00-21:00' },
+            { name: '蒸汽船遊湖', type: '景點', location: '皇后鎮', time: '10:00-16:00' }
+        ],
+        foods: ['弗格漢堡', '羊肉', '鹿肉', '鱒魚', '肉派', '紐西蘭葡萄酒', '白雲石冰淇淋', '海鮮拼盤', '燒烤', '帕瓦洛瓦'],
+        defaultSchedule: []
+    },
+
+    // ============ 非洲 (Africa) ============
+    '🇿🇦 開普敦': {
+        country: '南非', continent: '非洲', currency: 'ZAR',
+        spots: [
+            { name: '桌山', type: '景點', location: '開普敦', time: '08:00-18:00' },
+            { name: '好望角', type: '景點', location: '開普敦', time: '06:00-18:00' },
+            { name: 'V&A碼頭', type: '購物', location: '開普敦', time: '09:00-21:00' },
+            { name: '企鵝海灘', type: '景點', location: '西蒙鎮', time: '08:00-17:00' },
+            { name: '信號山', type: '景點', location: '開普敦', time: '全天' },
+            { name: '羅本島', type: '景點', location: '開普敦', time: '09:00-15:00' },
+            { name: '克斯坦博植物園', type: '景點', location: '開普敦', time: '08:00-18:00' },
+            { name: '波卡普區', type: '景點', location: '開普敦', time: '全天' },
+            { name: '斯泰倫博斯酒莊', type: '美食', location: '斯泰倫博斯', time: '09:00-17:00' },
+            { name: '查普曼峰', type: '景點', location: '開普敦', time: '06:00-19:00' }
+        ],
+        foods: ['波波提', '烤肉', '開普馬來咖哩', '牛尾', '南非乾肉', '馬來咖哩角', '南非燉肉', '鴕鳥肉', '葡萄酒', '奶塔'],
+        defaultSchedule: []
+    },
+    '🇪🇬 開羅': {
+        country: '埃及', continent: '非洲', currency: 'EGP',
+        spots: [
+            { name: '吉薩金字塔', type: '景點', location: '吉薩', time: '08:00-17:00' },
+            { name: '人面獅身像', type: '景點', location: '吉薩', time: '08:00-17:00' },
+            { name: '埃及博物館', type: '景點', location: '開羅', time: '09:00-17:00' },
+            { name: '哈利利市集', type: '購物', location: '開羅', time: '10:00-23:00' },
+            { name: '穆罕默德阿里清真寺', type: '景點', location: '開羅', time: '08:00-17:00' },
+            { name: '開羅塔', type: '景點', location: '開羅', time: '08:00-00:00' },
+            { name: '薩卡拉', type: '景點', location: '薩卡拉', time: '08:00-17:00' },
+            { name: '尼羅河遊輪', type: '景點', location: '開羅', time: '19:00-23:00' },
+            { name: '老開羅', type: '景點', location: '開羅', time: '全天' },
+            { name: '阿茲哈爾公園', type: '景點', location: '開羅', time: '09:00-22:00' }
+        ],
+        foods: ['烤肉串', '鷹嘴豆泥', '炸豆餅', '埃及燉菜', '烤鴿', '埃及麵包', '沙威瑪', '甜點', '埃及茶', '甘蔗汁'],
+        defaultSchedule: []
+    },
+    '🇲🇦 馬拉喀什': {
+        country: '摩洛哥', continent: '非洲', currency: 'MAD',
+        spots: [
+            { name: '傑馬夫納廣場', type: '景點', location: '馬拉喀什', time: '全天' },
+            { name: '庫圖比亞清真寺', type: '景點', location: '馬拉喀什', time: '外觀參觀' },
+            { name: '巴伊亞宮殿', type: '景點', location: '馬拉喀什', time: '09:00-17:00' },
+            { name: '馬若雷勒花園', type: '景點', location: '馬拉喀什', time: '08:00-18:00' },
+            { name: '老城區', type: '購物', location: '馬拉喀什', time: '全天' },
+            { name: '薩迪恩陵墓', type: '景點', location: '馬拉喀什', time: '09:00-17:00' },
+            { name: '皮革染坊', type: '景點', location: '馬拉喀什', time: '09:00-18:00' },
+            { name: '本優素夫神學院', type: '景點', location: '馬拉喀什', time: '09:00-18:00' },
+            { name: '撒哈拉沙漠', type: '景點', location: '撒哈拉', time: '全天' },
+            { name: '阿特拉斯山脈', type: '景點', location: '阿特拉斯', time: '全天' }
+        ],
+        foods: ['塔吉鍋', '庫斯庫斯', '摩洛哥薄荷茶', '沙威瑪', '摩洛哥餅', '哈里拉湯', '烤羊肉', '蝸牛湯', '杏仁糕點', '橙子沙拉'],
+        defaultSchedule: []
+    },
+    '🇰🇪 奈洛比': {
+        country: '肯亞', continent: '非洲', currency: 'KES',
+        spots: [
+            { name: '馬賽馬拉國家保護區', type: '景點', location: '馬賽馬拉', time: '06:00-18:00' },
+            { name: '大象孤兒院', type: '景點', location: '奈洛比', time: '11:00-12:00' },
+            { name: '長頸鹿中心', type: '景點', location: '奈洛比', time: '09:00-17:00' },
+            { name: '奈洛比國家公園', type: '景點', location: '奈洛比', time: '06:00-18:00' },
+            { name: '肯亞國家博物館', type: '景點', location: '奈洛比', time: '08:30-17:30' },
+            { name: '卡倫故居', type: '景點', location: '奈洛比', time: '09:00-18:00' },
+            { name: '納庫魯湖', type: '景點', location: '納庫魯', time: '06:00-18:00' },
+            { name: '安博塞利國家公園', type: '景點', location: '安博塞利', time: '06:00-18:00' },
+            { name: '市場', type: '購物', location: '奈洛比', time: '08:00-18:00' },
+            { name: '肯亞塔國際會議中心', type: '景點', location: '奈洛比', time: '08:00-17:00' }
+        ],
+        foods: ['烏伽黎', '尼亞馬喬瑪', '穆坎莫', '薩摩薩', '曼達茲', '皮拉烏', '烤肉', '酪梨沙拉', '肯亞茶', '甘蔗汁'],
+        defaultSchedule: []
+    }
+};
         // ============================================
         // 常數與變數
         // ============================================
-        const STORAGE_KEY = 'travel_planner_v3';
+        const STORAGE_KEY = 'travel_planner_v4';
         const TOKEN_KEY = 'travel_google_token';
         const TOKEN_SOFT_EXPIRE = 24 * 60 * 60;
         const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
         const SCOPES = 'https://www.googleapis.com/auth/calendar.events';
+        
+        // 貨幣匯率（參考台灣銀行 2024/2025 約略匯率）
+        const EXCHANGE_RATES = {
+            TWD: { symbol: 'NT$', name: '台幣', rate: 1, flag: '🇹🇼' },
+            JPY: { symbol: '¥', name: '日幣', rate: 0.21, flag: '🇯🇵' },      // 1 JPY ≈ 0.21 TWD
+            KRW: { symbol: '₩', name: '韓元', rate: 0.024, flag: '🇰🇷' },    // 1 KRW ≈ 0.024 TWD
+            HKD: { symbol: 'HK$', name: '港幣', rate: 4.1, flag: '🇭🇰' },    // 1 HKD ≈ 4.1 TWD
+            USD: { symbol: '$', name: '美金', rate: 32, flag: '🇺🇸' },       // 1 USD ≈ 32 TWD
+            EUR: { symbol: '€', name: '歐元', rate: 34, flag: '🇪🇺' },       // 1 EUR ≈ 34 TWD
+            GBP: { symbol: '£', name: '英鎊', rate: 40, flag: '🇬🇧' },       // 1 GBP ≈ 40 TWD
+            THB: { symbol: '฿', name: '泰銖', rate: 0.94, flag: '🇹🇭' },     // 1 THB ≈ 0.94 TWD
+            SGD: { symbol: 'S$', name: '新幣', rate: 24, flag: '🇸🇬' },      // 1 SGD ≈ 24 TWD
+            MYR: { symbol: 'RM', name: '馬幣', rate: 7.2, flag: '🇲🇾' },     // 1 MYR ≈ 7.2 TWD
+            VND: { symbol: '₫', name: '越盾', rate: 0.0013, flag: '🇻🇳' },  // 1 VND ≈ 0.0013 TWD
+            PHP: { symbol: '₱', name: '披索', rate: 0.57, flag: '🇵🇭' },     // 1 PHP ≈ 0.57 TWD
+            IDR: { symbol: 'Rp', name: '印尼盾', rate: 0.002, flag: '🇮🇩' }, // 1 IDR ≈ 0.002 TWD
+            AUD: { symbol: 'A$', name: '澳幣', rate: 21, flag: '🇦🇺' },      // 1 AUD ≈ 21 TWD
+            NZD: { symbol: 'NZ$', name: '紐幣', rate: 19, flag: '🇳🇿' },     // 1 NZD ≈ 19 TWD
+            CNY: { symbol: '¥', name: '人民幣', rate: 4.4, flag: '🇨🇳' },    // 1 CNY ≈ 4.4 TWD
+            CHF: { symbol: 'CHF', name: '瑞士法郎', rate: 36, flag: '🇨🇭' }, // 1 CHF ≈ 36 TWD
+            CZK: { symbol: 'Kč', name: '捷克克朗', rate: 1.4, flag: '🇨🇿' }, // 1 CZK ≈ 1.4 TWD
+            MOP: { symbol: 'MOP$', name: '澳門幣', rate: 4, flag: '🇲🇴' },   // 1 MOP ≈ 4 TWD
+            CAD: { symbol: 'C$', name: '加幣', rate: 23, flag: '🇨🇦' },      // 1 CAD ≈ 23 TWD
+            MXN: { symbol: 'MX$', name: '墨西哥披索', rate: 1.9, flag: '🇲🇽' },
+            ZAR: { symbol: 'R', name: '南非蘭特', rate: 1.8, flag: '🇿🇦' },
+            EGP: { symbol: 'E£', name: '埃及鎊', rate: 0.65, flag: '🇪🇬' },
+            MAD: { symbol: 'MAD', name: '摩洛哥迪拉姆', rate: 3.2, flag: '🇲🇦' },
+            KES: { symbol: 'KSh', name: '肯亞先令', rate: 0.25, flag: '🇰🇪' }
+        };
+        
+        // 支付方式
+        const PAYMENT_METHODS = {
+            cash: { name: '現金', icon: '💵', color: 'emerald' },
+            credit: { name: '信用卡', icon: '💳', color: 'purple' },
+            debit: { name: '簽帳金融卡', icon: '💳', color: 'cyan' },
+            epay: { name: '電子支付', icon: '📱', color: 'orange' },
+            iccard: { name: '交通卡', icon: '🚃', color: 'pink' }
+        };
         
         let tokenClient, gapiInited = false, gisInited = false;
         
@@ -1540,6 +2458,26 @@
                 .then(result => showToast(result.success ? `📋 ${result.schedules?.length || 0} 個排程` : '❌ 查詢失敗', result.success ? 'success' : 'error'));
         }
         
+        function clearAllSchedules() {
+            const { gasUrl, gasSecret } = appData.settings;
+            if (!gasUrl || !gasSecret) { showToast('請先設定 GAS', 'error'); return; }
+            
+            if (!confirm('確定要清除所有 LINE 提醒排程？\n\n⚠️ 這會刪除資料庫中所有待發送的提醒')) return;
+            
+            showToast('🗑️ 清除中...', 'info');
+            
+            fetch(gasUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ action: 'clearSchedules', secret: gasSecret }) })
+                .then(r => r.json())
+                .then(result => {
+                    if (result.success) {
+                        showToast('✅ 已清除所有排程', 'success');
+                    } else {
+                        showToast('❌ ' + (result.error || '清除失敗'), 'error');
+                    }
+                })
+                .catch(err => showToast('❌ ' + err.message, 'error'));
+        }
+        
         // ============================================
         // 批次設定提醒
         // ============================================
@@ -1593,7 +2531,7 @@
             showModal('batchReminderModal');
         }
         
-        function applyBatchReminders() {
+        async function applyBatchReminders() {
             const { lineToken, lineUserId, gasUrl, gasSecret } = appData.settings;
             
             if (!lineToken || !lineUserId || !gasUrl || !gasSecret) {
@@ -1613,8 +2551,26 @@
             }
             
             const overwrite = document.getElementById('overwriteReminders')?.checked || false;
+            const clearOld = document.getElementById('clearOldSchedules')?.checked || false;
             
             showToast('🔄 設定中...', 'info');
+            
+            // 如果選擇清除舊排程
+            if (clearOld) {
+                try {
+                    const clearResult = await fetch(gasUrl, { 
+                        method: 'POST', 
+                        headers: { 'Content-Type': 'text/plain' }, 
+                        body: JSON.stringify({ action: 'clearSchedules', secret: gasSecret }) 
+                    }).then(r => r.json());
+                    
+                    if (clearResult.success) {
+                        console.log('已清除舊排程');
+                    }
+                } catch (err) {
+                    console.error('清除排程失敗:', err);
+                }
+            }
             
             let updatedCount = 0;
             let reminderCount = 0;
@@ -1653,30 +2609,81 @@
         function renderExpenses() {
             const filter = document.getElementById('expenseFilterDate').value;
             let filtered = filter === 'all' ? appData.expenses : appData.expenses.filter(e => e.date === filter);
-            const totalJPY = appData.expenses.filter(e => e.currency === 'JPY').reduce((a, b) => a + b.amount, 0);
-            const totalTWD = appData.expenses.filter(e => e.currency === 'TWD').reduce((a, b) => a + b.amount, 0);
-            document.getElementById('expenseJPY').textContent = '¥' + totalJPY.toLocaleString();
-            document.getElementById('expenseTWD').textContent = '$' + totalTWD.toLocaleString();
+            
+            // 計算總花費（轉換為台幣）
+            let totalTWD = 0;
+            let totalForeign = 0;
+            const mainCurrency = appData.trip.mainCurrency || 'JPY';
+            
+            // 按支付方式統計
+            const paymentStats = {};
+            
+            appData.expenses.forEach(e => {
+                const rate = EXCHANGE_RATES[e.currency]?.rate || 1;
+                const twdAmount = e.amount * rate;
+                totalTWD += twdAmount;
+                if (e.currency === mainCurrency) {
+                    totalForeign += e.amount;
+                }
+                // 支付方式統計
+                if (!paymentStats[e.payment]) paymentStats[e.payment] = 0;
+                paymentStats[e.payment] += twdAmount;
+            });
+            
+            const currencyInfo = EXCHANGE_RATES[mainCurrency] || { symbol: '$', flag: '💰', name: '外幣' };
+            document.getElementById('expenseJPY').textContent = currencyInfo.symbol + totalForeign.toLocaleString();
+            document.getElementById('expenseForeignLabel').textContent = currencyInfo.name;
+            document.getElementById('expenseTWD').textContent = 'NT$' + Math.round(totalTWD).toLocaleString();
             document.getElementById('expenseCount').textContent = appData.expenses.length;
-            document.getElementById('statExpenseJPY').textContent = '¥' + totalJPY.toLocaleString();
-            document.getElementById('statExpenseTWD').textContent = '$' + totalTWD.toLocaleString();
+            document.getElementById('statExpenseJPY').textContent = currencyInfo.symbol + totalForeign.toLocaleString();
+            document.getElementById('statExpenseTWD').textContent = 'NT$' + Math.round(totalTWD).toLocaleString();
+            
+            // 顯示支付方式統計
+            const paymentSummary = document.getElementById('paymentSummary');
+            const paymentBreakdown = document.getElementById('paymentBreakdown');
+            if (Object.keys(paymentStats).length > 0) {
+                paymentSummary.style.display = 'block';
+                paymentBreakdown.innerHTML = Object.entries(paymentStats)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([method, amount]) => `
+                        <div style="background:var(--bg-dark);padding:6px 10px;border-radius:8px;font-size:0.8em;">
+                            ${getPaymentIcon(method)} ${method}: <span style="color:var(--emerald);">NT$${Math.round(amount).toLocaleString()}</span>
+                        </div>
+                    `).join('');
+            } else {
+                paymentSummary.style.display = 'none';
+            }
             
             const container = document.getElementById('expenseList');
             if (filtered.length === 0) {
                 container.innerHTML = '<div class="empty-state"><div class="empty-icon">💰</div><div>尚無花費紀錄</div></div>';
                 return;
             }
-            container.innerHTML = filtered.slice().reverse().map(e => `
+            container.innerHTML = filtered.slice().reverse().map(e => {
+                const rate = EXCHANGE_RATES[e.currency]?.rate || 1;
+                const twdAmount = Math.round(e.amount * rate);
+                return `
                 <div class="expense-item">
                     <div class="expense-info">
                         <div class="expense-category">${getCategoryEmoji(e.category)} ${e.category}</div>
                         <div class="expense-name">${e.item}</div>
-                        <div class="expense-meta">${e.payment}</div>
+                        <div class="expense-meta">${getPaymentIcon(e.payment)} ${e.payment}</div>
                     </div>
-                    <div class="expense-amount ${e.currency === 'TWD' ? 'twd' : 'jpy'}">${getCurrencySymbol(e.currency)}${e.amount.toLocaleString()}</div>
+                    <div style="text-align:right;">
+                        <div class="expense-amount">${getCurrencySymbol(e.currency)}${e.amount.toLocaleString()}</div>
+                        <div style="font-size:0.7em;color:var(--text-muted);">≈ NT$${twdAmount.toLocaleString()}</div>
+                    </div>
                     <div class="expense-delete" onclick="deleteExpense(${e.id})">🗑️</div>
                 </div>
-            `).join('');
+            `}).join('');
+        }
+        
+        function getPaymentIcon(payment) {
+            if (payment.includes('現金')) return '💵';
+            if (payment.includes('信用卡') || payment.includes('簽帳')) return '💳';
+            if (payment.includes('Pay') || payment.includes('支付') || payment.includes('微信')) return '📱';
+            if (payment.includes('Suica') || payment.includes('悠遊') || payment.includes('T-money') || payment.includes('八達通')) return '🚃';
+            return '📌';
         }
         
         function showAddExpenseModal() {
@@ -1849,7 +2856,16 @@
         function formatDate(d) { const w = ['日','一','二','三','四','五','六']; return `${d.getMonth()+1}/${d.getDate()} (${w[d.getDay()]})`; }
         function getTypeEmoji(t) { return { '景點': '🏛️', '美食': '🍜', '交通': '🚃', '住宿': '🏨', '購物': '🛍️', '其他': '📌' }[t] || '📌'; }
         function getCategoryEmoji(c) { return { '飲食': '🍜', '交通': '🚃', '住宿': '🏨', '購物': '🛍️', '門票': '🎫', '其他': '📌' }[c] || '📌'; }
-        function getCurrencySymbol(c) { return { 'JPY': '¥', 'KRW': '₩', 'THB': '฿', 'USD': '$', 'TWD': '$' }[c] || ''; }
+        function getCurrencySymbol(c) { 
+            const symbols = { 
+                'JPY': '¥', 'KRW': '₩', 'THB': '฿', 'USD': '$', 'TWD': 'NT$',
+                'EUR': '€', 'GBP': '£', 'HKD': 'HK$', 'SGD': 'S$', 'MYR': 'RM',
+                'VND': '₫', 'PHP': '₱', 'IDR': 'Rp', 'AUD': 'A$', 'NZD': 'NZ$',
+                'CNY': '¥', 'CHF': 'CHF', 'CZK': 'Kč', 'MOP': 'MOP$', 'CAD': 'C$',
+                'MXN': 'MX$', 'ZAR': 'R', 'EGP': 'E£', 'MAD': 'MAD', 'KES': 'KSh'
+            };
+            return symbols[c] || ''; 
+        }
         
         document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); }));
     </script>
