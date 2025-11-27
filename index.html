@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="旅遊規劃高手">
+    <meta name="theme-color" content="#0f172a">
+    <title>旅遊規劃高手</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;charset=utf-8,%7B%22name%22%3A%22%E6%97%85%E9%81%8A%E8%A6%8F%E5%8A%83%E9%AB%98%E6%89%8B%22%2C%22short_name%22%3A%22%E6%97%85%E9%81%8A%E8%A6%8F%E5%8A%83%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230f172a%22%2C%22theme_color%22%3A%22%2306b6d4%22%7D">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%230f172a' rx='40'/%3E%3Ctext x='90' y='100' font-size='100' text-anchor='middle'%3E✈️%3C/text%3E%3C/svg%3E">
+    
+    <!-- Google API -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <!-- SheetJS for Excel Export -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --cyan: #06b6d4;
+            --cyan-glow: rgba(6, 182, 212, 0.3);
+            --purple: #a855f7;
+            --purple-glow: rgba(168, 85, 247, 0.3);
+            --emerald: #10b981;
+            --emerald-glow: rgba(16, 185, 129, 0.3);
+            --orange: #f59e0b;
+            --orange-glow: rgba(245, 158, 11, 0.3);
+            --pink: #ec4899;
+            --pink-glow: rgba(236, 72, 153, 0.3);
+            --red: #ef4444;
+            --text-light: #e2e8f0;
+            --text-dim: #94a3b8;
+            --text-muted: #64748b;
+            --border: #334155;
+            --nav-height: 70px;
+            --header-height: 60px;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { height: 100%; overflow: hidden; touch-action: manipulation; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif; background: var(--bg-dark); color: var(--text-light); line-height: 1.5; }
+        
+        .app-container { height: 100%; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+        
+        .app-header { height: var(--header-height); background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; flex-shrink: 0; }
+        .app-logo { display: flex; align-items: center; gap: 10px; font-size: 1.2em; font-weight: 700; }
+        .header-actions { display: flex; gap: 8px; }
+        .header-btn { width: 40px; height: 40px; border: none; background: rgba(255,255,255,0.2); border-radius: 12px; color: white; font-size: 1.3em; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .header-btn:active { background: rgba(255,255,255,0.3); }
+        
+        .app-content { flex: 1; overflow: hidden; position: relative; }
+        .page { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow-y: auto; padding: 16px; padding-bottom: calc(var(--nav-height) + 20px); display: none; -webkit-overflow-scrolling: touch; }
+        .page.active { display: block; }
+        
+        .bottom-nav { height: var(--nav-height); background: var(--bg-card); border-top: 1px solid var(--border); display: flex; flex-shrink: 0; }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: none; background: transparent; color: var(--text-muted); padding: 8px 0; cursor: pointer; position: relative; }
+        .nav-item::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 0; height: 3px; background: var(--cyan); border-radius: 0 0 3px 3px; transition: width 0.3s; }
+        .nav-item.active { color: var(--cyan); }
+        .nav-item.active::before { width: 30px; }
+        .nav-icon { font-size: 1.5em; }
+        .nav-label { font-size: 0.7em; font-weight: 500; }
+        
+        .card { background: var(--bg-card); border-radius: 16px; padding: 16px; margin-bottom: 16px; border: 1px solid var(--border); }
+        .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2em; }
+        .card-icon.cyan { background: var(--cyan-glow); }
+        .card-icon.purple { background: var(--purple-glow); }
+        .card-icon.emerald { background: var(--emerald-glow); }
+        .card-icon.orange { background: var(--orange-glow); }
+        .card-icon.pink { background: var(--pink-glow); }
+        .card-title { font-size: 1em; font-weight: 600; }
+        .card-subtitle { font-size: 0.8em; color: var(--text-dim); }
+        
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+        .stat-card { background: var(--bg-card); border-radius: 12px; padding: 12px; text-align: center; border: 1px solid var(--border); }
+        .stat-value { font-size: 1.4em; font-weight: 700; }
+        .stat-value.cyan { color: var(--cyan); }
+        .stat-value.orange { color: var(--orange); }
+        .stat-value.emerald { color: var(--emerald); }
+        .stat-value.pink { color: var(--pink); }
+        .stat-label { font-size: 0.7em; color: var(--text-muted); margin-top: 2px; }
+        
+        .input-group { margin-bottom: 14px; }
+        .input-label { display: block; font-size: 0.85em; font-weight: 500; color: var(--text-dim); margin-bottom: 6px; }
+        .input-field { width: 100%; padding: 12px 14px; background: var(--bg-dark); border: 2px solid var(--border); border-radius: 10px; color: var(--text-light); font-size: 1em; -webkit-appearance: none; }
+        .input-field:focus { outline: none; border-color: var(--cyan); }
+        .input-field::placeholder { color: var(--text-muted); }
+        select.input-field { cursor: pointer; }
+        textarea.input-field { min-height: 80px; resize: vertical; }
+        
+        .input-row { display: flex; gap: 10px; }
+        .input-row .input-group { flex: 1; margin-bottom: 0; }
+        .input-row-btn { display: flex; gap: 8px; }
+        .input-row-btn .input-field { flex: 1; }
+        .input-btn { width: 50px; height: 48px; border: none; background: var(--bg-card-hover); border-radius: 10px; color: var(--text-dim); font-size: 1.2em; cursor: pointer; flex-shrink: 0; }
+        
+        .btn { width: 100%; padding: 14px 20px; border: none; border-radius: 12px; font-size: 1em; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%); color: white; }
+        .btn-secondary { background: linear-gradient(135deg, var(--emerald) 0%, #059669 100%); color: white; }
+        .btn-orange { background: linear-gradient(135deg, var(--orange) 0%, #d97706 100%); color: white; }
+        .btn-pink { background: linear-gradient(135deg, var(--pink) 0%, #db2777 100%); color: white; }
+        .btn-outline { background: transparent; border: 2px solid var(--cyan); color: var(--cyan); }
+        .btn-danger { background: var(--red); color: white; }
+        .btn-sm { padding: 10px 14px; font-size: 0.9em; }
+        .btn-xs { padding: 8px 12px; font-size: 0.8em; border-radius: 8px; }
+        
+        .action-row { display: flex; gap: 10px; margin-top: 14px; }
+        .action-row .btn { flex: 1; }
+        
+        /* Trip Banner */
+        .trip-banner { background: linear-gradient(135deg, var(--cyan-glow) 0%, var(--purple-glow) 100%); border-radius: 16px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); text-align: center; }
+        .trip-name { font-size: 1.5em; font-weight: 700; margin-bottom: 4px; }
+        .trip-dest { font-size: 1em; color: var(--cyan); margin-bottom: 8px; }
+        .trip-dates { font-size: 0.85em; color: var(--text-dim); }
+        
+        /* Day Card */
+        .day-card { background: var(--bg-card); border-radius: 14px; margin-bottom: 14px; border: 1px solid var(--border); overflow: hidden; }
+        .day-header { padding: 14px; background: linear-gradient(135deg, var(--cyan-glow) 0%, var(--purple-glow) 100%); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .day-title { font-weight: 600; }
+        .day-date { font-size: 0.8em; color: var(--text-dim); }
+        .day-content { padding: 14px; display: none; }
+        .day-content.show { display: block; }
+        
+        .schedule-item { background: var(--bg-dark); border-radius: 10px; padding: 12px; margin-bottom: 10px; border-left: 3px solid var(--cyan); }
+        .schedule-item.has-reminder { border-left-color: var(--orange); }
+        .schedule-item.synced { border-left-color: var(--emerald); }
+        .schedule-time { font-size: 0.8em; color: var(--cyan); font-weight: 600; }
+        .schedule-title { font-size: 0.95em; font-weight: 500; margin: 4px 0; }
+        .schedule-location { font-size: 0.8em; color: var(--text-dim); }
+        .schedule-actions { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+        .schedule-badge { font-size: 0.7em; padding: 2px 8px; border-radius: 10px; }
+        .schedule-badge.reminder { background: var(--orange-glow); color: var(--orange); }
+        .schedule-badge.synced { background: var(--emerald-glow); color: var(--emerald); }
+        
+        /* Expense Item */
+        .expense-item { background: var(--bg-dark); border-radius: 10px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .expense-info { flex: 1; }
+        .expense-category { font-size: 0.75em; color: var(--text-muted); }
+        .expense-name { font-size: 0.95em; font-weight: 500; }
+        .expense-meta { font-size: 0.75em; color: var(--text-dim); margin-top: 2px; }
+        .expense-amount { font-size: 1.1em; font-weight: 700; }
+        .expense-amount.jpy { color: var(--orange); }
+        .expense-amount.twd { color: var(--emerald); }
+        .expense-delete { color: var(--text-muted); padding: 8px; cursor: pointer; }
+        
+        /* Shopping Item */
+        .shop-item { background: var(--bg-dark); border-radius: 10px; padding: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+        .shop-item.bought { opacity: 0.5; }
+        .shop-checkbox { width: 24px; height: 24px; border: 2px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+        .shop-item.bought .shop-checkbox { background: var(--emerald); border-color: var(--emerald); }
+        .shop-info { flex: 1; }
+        .shop-name { font-size: 0.95em; font-weight: 500; }
+        .shop-item.bought .shop-name { text-decoration: line-through; }
+        .shop-meta { font-size: 0.75em; color: var(--text-dim); }
+        .shop-priority { font-size: 0.7em; padding: 2px 8px; border-radius: 10px; }
+        .shop-priority.high { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .shop-priority.medium { background: var(--orange-glow); color: var(--orange); }
+        .shop-priority.low { background: var(--emerald-glow); color: var(--emerald); }
+        
+        /* Reminder Grid */
+        .reminder-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
+        .reminder-option { display: flex; align-items: center; gap: 8px; padding: 10px; background: var(--bg-dark); border: 2px solid var(--border); border-radius: 10px; cursor: pointer; font-size: 0.85em; }
+        .reminder-option.checked { border-color: var(--cyan); background: var(--cyan-glow); }
+        .reminder-checkbox { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .reminder-option.checked .reminder-checkbox { background: var(--cyan); border-color: var(--cyan); }
+        
+        /* Setting Item */
+        .setting-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border); }
+        .setting-item:last-child { border-bottom: none; }
+        .setting-info { flex: 1; }
+        .setting-label { font-size: 0.95em; font-weight: 500; }
+        .setting-status { font-size: 0.8em; color: var(--text-dim); }
+        .setting-icon { font-size: 1.2em; margin-right: 12px; }
+        
+        .toggle { width: 50px; height: 28px; background: var(--border); border-radius: 14px; position: relative; cursor: pointer; transition: background 0.3s; }
+        .toggle.active { background: var(--cyan); }
+        .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; background: white; border-radius: 50%; transition: transform 0.3s; }
+        .toggle.active::after { transform: translateX(22px); }
+        
+        /* Auth Status */
+        .auth-status { margin-top: 8px; padding: 10px; border-radius: 8px; font-size: 0.85em; }
+        .auth-status.success { background: var(--emerald-glow); color: var(--emerald); }
+        .auth-status.error { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .auth-status.pending { background: var(--orange-glow); color: var(--orange); }
+        
+        /* Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; align-items: flex-end; justify-content: center; z-index: 1000; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: var(--bg-card); border-radius: 20px 20px 0 0; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 16px; }
+        .modal-title { font-size: 1.1em; font-weight: 600; text-align: center; margin-bottom: 16px; }
+        
+        /* Toast */
+        .toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: var(--bg-card); color: var(--text-light); padding: 12px 20px; border-radius: 10px; font-size: 0.9em; z-index: 2000; opacity: 0; transition: opacity 0.3s; border: 1px solid var(--border); max-width: calc(100% - 40px); text-align: center; }
+        .toast.show { opacity: 1; }
+        .toast.success { border-color: var(--emerald); }
+        .toast.error { border-color: var(--red); }
+        
+        /* Progress Bar */
+        .progress-bar { height: 8px; background: var(--bg-dark); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--purple)); border-radius: 4px; transition: width 0.5s ease; }
+        
+        /* Empty State */
+        .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+        .empty-icon { font-size: 3em; margin-bottom: 12px; }
+        .empty-text { font-size: 0.95em; }
+        
+        /* FAB */
+        .fab { position: fixed; bottom: calc(var(--nav-height) + 20px + env(safe-area-inset-bottom)); right: 20px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--purple)); color: white; border: none; font-size: 1.5em; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4); cursor: pointer; z-index: 100; }
+        .fab:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="app-logo">✈️ 旅遊規劃高手</div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="showExportModal()">📊</button>
+                <button class="header-btn" onclick="switchPage('settings')">⚙️</button>
+            </div>
+        </header>
+        
+        <!-- Content -->
+        <main class="app-content">
+            <!-- 首頁 -->
+            <div id="page-home" class="page active">
+                <div class="trip-banner">
+                    <div class="trip-name" id="displayTripName">我的旅行</div>
+                    <div class="trip-dest" id="displayDestination">🌍 點擊下方設定目的地</div>
+                    <div class="trip-dates" id="displayDates">📅 尚未設定日期</div>
+                </div>
+                
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-value cyan" id="statDays">0</div>
+                        <div class="stat-label">天數</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value orange" id="statExpenseJPY">¥0</div>
+                        <div class="stat-label">日幣花費</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value emerald" id="statExpenseTWD">$0</div>
+                        <div class="stat-label">台幣花費</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon cyan">🎯</div>
+                        <div>
+                            <div class="card-title">旅遊設定</div>
+                            <div class="card-subtitle">設定您的旅行資訊</div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">旅遊名稱</label>
+                        <input type="text" class="input-field" id="tripName" placeholder="例：2025 東京自由行" onchange="updateTripInfo()">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">目的地</label>
+                        <select class="input-field" id="destination" onchange="handleDestinationChange()">
+                            <option value="">請選擇目的地</option>
+                            <optgroup label="🇯🇵 日本">
+                                <option value="🇯🇵 東京">🇯🇵 東京</option>
+                                <option value="🇯🇵 大阪">🇯🇵 大阪</option>
+                                <option value="🇯🇵 京都">🇯🇵 京都</option>
+                                <option value="🇯🇵 北海道">🇯🇵 北海道</option>
+                                <option value="🇯🇵 沖繩">🇯🇵 沖繩</option>
+                                <option value="🇯🇵 九州">🇯🇵 九州</option>
+                                <option value="🇯🇵 名古屋">🇯🇵 名古屋</option>
+                                <option value="🇯🇵 福岡">🇯🇵 福岡</option>
+                            </optgroup>
+                            <optgroup label="🇰🇷 韓國">
+                                <option value="🇰🇷 首爾">🇰🇷 首爾</option>
+                                <option value="🇰🇷 釜山">🇰🇷 釜山</option>
+                                <option value="🇰🇷 濟州島">🇰🇷 濟州島</option>
+                            </optgroup>
+                            <optgroup label="🌏 東南亞">
+                                <option value="🇹🇭 泰國">🇹🇭 泰國</option>
+                                <option value="🇻🇳 越南">🇻🇳 越南</option>
+                                <option value="🇸🇬 新加坡">🇸🇬 新加坡</option>
+                                <option value="🇲🇾 馬來西亞">🇲🇾 馬來西亞</option>
+                            </optgroup>
+                            <optgroup label="🌍 其他">
+                                <option value="🇺🇸 美國">🇺🇸 美國</option>
+                                <option value="🇬🇧 英國">🇬🇧 英國</option>
+                                <option value="🇫🇷 法國">🇫🇷 法國</option>
+                                <option value="🇦🇺 澳洲">🇦🇺 澳洲</option>
+                                <option value="custom">✏️ 自訂...</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="input-group" id="customDestGroup" style="display:none;">
+                        <input type="text" class="input-field" id="customDestination" placeholder="輸入自訂目的地" onchange="updateTripInfo()">
+                    </div>
+                    
+                    <div class="input-row" style="margin-bottom:14px;">
+                        <div class="input-group">
+                            <label class="input-label">出發日期</label>
+                            <input type="date" class="input-field" id="startDate" onchange="updateTripInfo()">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">結束日期</label>
+                            <input type="date" class="input-field" id="endDate" onchange="updateTripInfo()">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">主要幣別</label>
+                        <select class="input-field" id="mainCurrency" onchange="saveData()">
+                            <option value="JPY">🇯🇵 日幣 (JPY)</option>
+                            <option value="KRW">🇰🇷 韓元 (KRW)</option>
+                            <option value="THB">🇹🇭 泰銖 (THB)</option>
+                            <option value="USD">🇺🇸 美元 (USD)</option>
+                            <option value="EUR">🇪🇺 歐元 (EUR)</option>
+                            <option value="TWD">🇹🇼 台幣 (TWD)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon purple">⚡</div>
+                        <div><div class="card-title">快速功能</div></div>
+                    </div>
+                    <div class="stats-row" style="margin-bottom:0;">
+                        <div class="stat-card" style="cursor:pointer;" onclick="switchPage('itinerary')">
+                            <div style="font-size:1.5em;">📅</div>
+                            <div class="stat-label">行程</div>
+                        </div>
+                        <div class="stat-card" style="cursor:pointer;" onclick="switchPage('expense')">
+                            <div style="font-size:1.5em;">💰</div>
+                            <div class="stat-label">記帳</div>
+                        </div>
+                        <div class="stat-card" style="cursor:pointer;" onclick="switchPage('shopping')">
+                            <div style="font-size:1.5em;">🛒</div>
+                            <div class="stat-label">購物</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 行程頁面 -->
+            <div id="page-itinerary" class="page">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon cyan">📅</div>
+                        <div>
+                            <div class="card-title">每日行程</div>
+                            <div class="card-subtitle">規劃您的旅遊行程</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 同步按鈕 -->
+                    <button class="btn btn-secondary btn-sm" onclick="syncAllToGoogleCalendar()" style="margin-bottom:10px;">
+                        📆 同步全部到 Google 日曆
+                    </button>
+                </div>
+                
+                <div id="itineraryList"></div>
+                
+                <button class="btn btn-outline" onclick="showAddDayModal()" style="margin-top:10px;">
+                    ➕ 新增一天
+                </button>
+            </div>
+            
+            <!-- 記帳頁面 -->
+            <div id="page-expense" class="page">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon orange">💰</div>
+                        <div>
+                            <div class="card-title">旅遊記帳</div>
+                            <div class="card-subtitle">記錄您的花費</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-row">
+                        <div class="stat-card">
+                            <div class="stat-value orange" id="expenseJPY">¥0</div>
+                            <div class="stat-label">日幣</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value emerald" id="expenseTWD">$0</div>
+                            <div class="stat-label">台幣</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value pink" id="expenseCount">0</div>
+                            <div class="stat-label">筆</div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <select class="input-field" id="expenseFilterDate" onchange="renderExpenses()">
+                            <option value="all">全部日期</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="expenseList"></div>
+                
+                <button class="fab" onclick="showAddExpenseModal()">➕</button>
+            </div>
+            
+            <!-- 購物清單頁面 -->
+            <div id="page-shopping" class="page">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon pink">🛒</div>
+                        <div>
+                            <div class="card-title">購物清單</div>
+                            <div class="card-subtitle">想買的東西</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display:flex;justify-content:space-between;font-size:0.85em;color:var(--text-dim);">
+                        <span>完成進度</span>
+                        <span id="shoppingProgress">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="shoppingProgressBar" style="width:0%"></div>
+                    </div>
+                </div>
+                
+                <div id="shoppingList"></div>
+                
+                <button class="fab" onclick="showAddShoppingModal()">➕</button>
+            </div>
+            
+            <!-- 設定頁面 -->
+            <div id="page-settings" class="page">
+                <!-- Google Calendar 設定 -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon cyan">📆</div>
+                        <div>
+                            <div class="card-title">Google 日曆</div>
+                            <div class="card-subtitle">同步行程到 Google Calendar</div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Google OAuth Client ID</label>
+                        <div class="input-row-btn">
+                            <input type="password" class="input-field" id="googleClientId" placeholder="輸入 Client ID" onchange="saveSettings()">
+                            <button class="input-btn" onclick="toggleVisibility('googleClientId')">👁️</button>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-outline btn-sm" onclick="handleGoogleAuthorize()">🔐 授權 Google 日曆</button>
+                    
+                    <div id="googleAuthStatus" class="auth-status" style="display:none;"></div>
+                </div>
+                
+                <!-- LINE 通知設定 -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon emerald">🔔</div>
+                        <div>
+                            <div class="card-title">LINE 提醒設定</div>
+                            <div class="card-subtitle">設定行程提醒通知</div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">LINE Channel Access Token</label>
+                        <div class="input-row-btn">
+                            <input type="password" class="input-field" id="lineToken" placeholder="貼上您的 Token" onchange="saveSettings()">
+                            <button class="input-btn" onclick="toggleVisibility('lineToken')">👁️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">LINE User ID</label>
+                        <div class="input-row-btn">
+                            <input type="password" class="input-field" id="lineUserId" placeholder="您的 LINE User ID" onchange="saveSettings()">
+                            <button class="input-btn" onclick="toggleVisibility('lineUserId')">👁️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">GAS Web App URL</label>
+                        <div class="input-row-btn">
+                            <input type="password" class="input-field" id="gasUrl" placeholder="https://script.google.com/..." onchange="saveSettings()">
+                            <button class="input-btn" onclick="toggleVisibility('gasUrl')">👁️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">GAS Secret Key</label>
+                        <div class="input-row-btn">
+                            <input type="password" class="input-field" id="gasSecret" placeholder="您設定的暗號" onchange="saveSettings()">
+                            <button class="input-btn" onclick="toggleVisibility('gasSecret')">👁️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-row">
+                        <button class="btn btn-outline btn-sm" onclick="testLineNotification()">📨 測試通知</button>
+                        <button class="btn btn-secondary btn-sm" onclick="viewSchedules()">📋 查看排程</button>
+                    </div>
+                </div>
+                
+                <!-- 資料管理 -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon purple">💾</div>
+                        <div><div class="card-title">資料管理</div></div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div style="display:flex;align-items:center;">
+                            <span class="setting-icon">💾</span>
+                            <div class="setting-info">
+                                <div class="setting-label">本機儲存</div>
+                                <div class="setting-status">自動保存資料</div>
+                            </div>
+                        </div>
+                        <div class="toggle active" id="storageToggle" onclick="toggleStorage()"></div>
+                    </div>
+                    
+                    <div class="action-row">
+                        <button class="btn btn-outline btn-sm" onclick="exportToExcel()">📊 匯出 Excel</button>
+                        <button class="btn btn-danger btn-sm" onclick="clearAllData()">🗑️ 清除資料</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="switchPage('home')">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">首頁</span>
+            </button>
+            <button class="nav-item" onclick="switchPage('itinerary')">
+                <span class="nav-icon">📅</span>
+                <span class="nav-label">行程</span>
+            </button>
+            <button class="nav-item" onclick="switchPage('expense')">
+                <span class="nav-icon">💰</span>
+                <span class="nav-label">記帳</span>
+            </button>
+            <button class="nav-item" onclick="switchPage('shopping')">
+                <span class="nav-icon">🛒</span>
+                <span class="nav-label">購物</span>
+            </button>
+            <button class="nav-item" onclick="switchPage('settings')">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-label">設定</span>
+            </button>
+        </nav>
+    </div>
+    
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- Modal: 新增行程 -->
+    <div class="modal-overlay" id="scheduleModal">
+        <div class="modal">
+            <div class="modal-handle"></div>
+            <div class="modal-title">📍 新增行程</div>
+            
+            <div class="input-group">
+                <label class="input-label">選擇日期</label>
+                <select class="input-field" id="scheduleDay"></select>
+            </div>
+            
+            <div class="input-row" style="margin-bottom:14px;">
+                <div class="input-group">
+                    <label class="input-label">開始時間</label>
+                    <input type="time" class="input-field" id="scheduleStartTime" value="09:00">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">結束時間</label>
+                    <input type="time" class="input-field" id="scheduleEndTime" value="10:00">
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">活動名稱</label>
+                <input type="text" class="input-field" id="scheduleTitle" placeholder="例：參觀東京鐵塔">
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">類型</label>
+                <select class="input-field" id="scheduleType">
+                    <option value="景點">🏛️ 景點</option>
+                    <option value="美食">🍜 美食</option>
+                    <option value="交通">🚃 交通</option>
+                    <option value="住宿">🏨 住宿</option>
+                    <option value="購物">🛍️ 購物</option>
+                    <option value="其他">📌 其他</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">地點 (選填)</label>
+                <input type="text" class="input-field" id="scheduleLocation" placeholder="例：東京都港區">
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">備註 (選填)</label>
+                <textarea class="input-field" id="scheduleNote" placeholder="其他備註..."></textarea>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">🔔 LINE 提醒</label>
+                <div class="reminder-grid">
+                    <label class="reminder-option" onclick="toggleReminder(this)">
+                        <div class="reminder-checkbox">✓</div>
+                        <span>前 1 天</span>
+                        <input type="checkbox" value="1440">
+                    </label>
+                    <label class="reminder-option" onclick="toggleReminder(this)">
+                        <div class="reminder-checkbox">✓</div>
+                        <span>前 2 小時</span>
+                        <input type="checkbox" value="120">
+                    </label>
+                    <label class="reminder-option" onclick="toggleReminder(this)">
+                        <div class="reminder-checkbox">✓</div>
+                        <span>前 1 小時</span>
+                        <input type="checkbox" value="60">
+                    </label>
+                    <label class="reminder-option" onclick="toggleReminder(this)">
+                        <div class="reminder-checkbox">✓</div>
+                        <span>前 30 分鐘</span>
+                        <input type="checkbox" value="30">
+                    </label>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label class="reminder-option" onclick="toggleReminder(this)" style="width:100%;">
+                    <div class="reminder-checkbox">✓</div>
+                    <span>📆 同步到 Google 日曆</span>
+                    <input type="checkbox" id="syncToGoogle" value="google">
+                </label>
+            </div>
+            
+            <div class="action-row">
+                <button class="btn btn-outline" onclick="closeModal('scheduleModal')">取消</button>
+                <button class="btn btn-primary" onclick="saveSchedule()">儲存</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal: 新增記帳 -->
+    <div class="modal-overlay" id="expenseModal">
+        <div class="modal">
+            <div class="modal-handle"></div>
+            <div class="modal-title">💰 新增花費</div>
+            
+            <div class="input-row" style="margin-bottom:14px;">
+                <div class="input-group">
+                    <label class="input-label">日期</label>
+                    <select class="input-field" id="expenseDay"></select>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">類別</label>
+                    <select class="input-field" id="expenseCategory">
+                        <option value="飲食">🍜 飲食</option>
+                        <option value="交通">🚃 交通</option>
+                        <option value="住宿">🏨 住宿</option>
+                        <option value="購物">🛍️ 購物</option>
+                        <option value="門票">🎫 門票</option>
+                        <option value="其他">📌 其他</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">項目名稱</label>
+                <input type="text" class="input-field" id="expenseItem" placeholder="例：拉麵午餐">
+            </div>
+            
+            <div class="input-row" style="margin-bottom:14px;">
+                <div class="input-group">
+                    <label class="input-label">金額</label>
+                    <input type="number" class="input-field" id="expenseAmount" placeholder="0">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">幣別</label>
+                    <select class="input-field" id="expenseCurrency">
+                        <option value="JPY">🇯🇵 JPY</option>
+                        <option value="KRW">🇰🇷 KRW</option>
+                        <option value="THB">🇹🇭 THB</option>
+                        <option value="USD">🇺🇸 USD</option>
+                        <option value="EUR">🇪🇺 EUR</option>
+                        <option value="TWD">🇹🇼 TWD</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">支付方式</label>
+                <select class="input-field" id="expensePayment">
+                    <option value="現金">💵 現金</option>
+                    <option value="信用卡">💳 信用卡</option>
+                    <option value="Suica/ICOCA">🚃 Suica/ICOCA</option>
+                    <option value="PayPay">📱 PayPay</option>
+                    <option value="LINE Pay">📱 LINE Pay</option>
+                    <option value="其他">📌 其他</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">備註 (選填)</label>
+                <input type="text" class="input-field" id="expenseNote" placeholder="備註...">
+            </div>
+            
+            <div class="action-row">
+                <button class="btn btn-outline" onclick="closeModal('expenseModal')">取消</button>
+                <button class="btn btn-orange" onclick="saveExpense()">儲存</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal: 新增購物 -->
+    <div class="modal-overlay" id="shoppingModal">
+        <div class="modal">
+            <div class="modal-handle"></div>
+            <div class="modal-title">🛒 新增購物項目</div>
+            
+            <div class="input-group">
+                <label class="input-label">商品名稱</label>
+                <input type="text" class="input-field" id="shopItem" placeholder="例：藥妝、零食...">
+            </div>
+            
+            <div class="input-row" style="margin-bottom:14px;">
+                <div class="input-group">
+                    <label class="input-label">預算</label>
+                    <input type="number" class="input-field" id="shopBudget" placeholder="0">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">優先度</label>
+                    <select class="input-field" id="shopPriority">
+                        <option value="high">🔴 必買</option>
+                        <option value="medium">🟡 想買</option>
+                        <option value="low">🟢 隨意</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">購買地點 (選填)</label>
+                <select class="input-field" id="shopStore">
+                    <option value="">未指定</option>
+                    <option value="藥妝店">💊 藥妝店</option>
+                    <option value="便利商店">🏪 便利商店</option>
+                    <option value="百貨公司">🏬 百貨公司</option>
+                    <option value="Outlet">🛍️ Outlet</option>
+                    <option value="機場免稅">✈️ 機場免稅</option>
+                    <option value="超市">🛒 超市</option>
+                    <option value="其他">📌 其他</option>
+                </select>
+            </div>
+            
+            <div class="action-row">
+                <button class="btn btn-outline" onclick="closeModal('shoppingModal')">取消</button>
+                <button class="btn btn-pink" onclick="saveShopping()">儲存</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal: 新增天數 -->
+    <div class="modal-overlay" id="dayModal">
+        <div class="modal">
+            <div class="modal-handle"></div>
+            <div class="modal-title">📅 新增行程日</div>
+            
+            <div class="input-group">
+                <label class="input-label">日期</label>
+                <input type="date" class="input-field" id="newDayDate">
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">標題 (選填)</label>
+                <input type="text" class="input-field" id="newDayTitle" placeholder="例：抵達日、自由活動日">
+            </div>
+            
+            <div class="action-row">
+                <button class="btn btn-outline" onclick="closeModal('dayModal')">取消</button>
+                <button class="btn btn-primary" onclick="saveNewDay()">儲存</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal: 匯出 -->
+    <div class="modal-overlay" id="exportModal">
+        <div class="modal">
+            <div class="modal-handle"></div>
+            <div class="modal-title">📊 匯出資料</div>
+            
+            <div style="text-align:center;padding:20px 0;">
+                <div style="font-size:3em;margin-bottom:12px;">📊</div>
+                <p style="color:var(--text-dim);margin-bottom:20px;">匯出完整的旅遊紀錄為 Excel 檔案</p>
+            </div>
+            
+            <button class="btn btn-secondary" onclick="exportToExcel()">📥 下載 Excel (.xlsx)</button>
+            <button class="btn btn-outline" style="margin-top:10px;" onclick="closeModal('exportModal')">取消</button>
+        </div>
+    </div>
+    
+    <script>
+        // ============================================
+        // 常數與變數
+        // ============================================
+        const STORAGE_KEY = 'travel_planner_v2';
+        const TOKEN_KEY = 'travel_google_token';
+        const TOKEN_SOFT_EXPIRE = 24 * 60 * 60; // 24 小時（秒）
+        const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
+        const SCOPES = 'https://www.googleapis.com/auth/calendar.events';
+        
+        let tokenClient;
+        let gapiInited = false;
+        let gisInited = false;
+        
+        let appData = {
+            trip: { name: '', destination: '', customDestination: '', startDate: '', endDate: '', mainCurrency: 'JPY' },
+            days: [],
+            expenses: [],
+            shopping: [],
+            settings: { googleClientId: '', lineToken: '', lineUserId: '', gasUrl: '', gasSecret: '', storageEnabled: true }
+        };
+        
+        // ============================================
+        // 初始化
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            renderAll();
+            initGoogleAPI();
+            console.log('✅ 旅遊規劃高手 初始化完成');
+        });
+        
+        // ============================================
+        // Google OAuth 初始化（24 小時快取）
+        // ============================================
+        function initGoogleAPI() {
+            if (typeof gapi !== 'undefined') {
+                gapi.load('client', async function() {
+                    try {
+                        await gapi.client.init({ discoveryDocs: DISCOVERY_DOCS });
+                        gapiInited = true;
+                        console.log('✅ GAPI 初始化完成');
+                        loadSavedToken();
+                    } catch (err) { console.error('GAPI 初始化失敗:', err); }
+                });
+            }
+        }
+        
+        // 儲存 Token（24 小時有效期）
+        function saveGoogleToken(token) {
+            try {
+                const tokenData = {
+                    token: token,
+                    savedAt: Date.now(),
+                    expiresIn: TOKEN_SOFT_EXPIRE,
+                    actualExpiresIn: token.expires_in || 3600
+                };
+                localStorage.setItem(TOKEN_KEY, JSON.stringify(tokenData));
+                console.log('✅ Token 已儲存（24 小時有效期策略）');
+            } catch (e) { console.error('儲存 Token 失敗:', e); }
+        }
+        
+        // 載入已儲存的 Token
+        function loadSavedToken() {
+            try {
+                const saved = localStorage.getItem(TOKEN_KEY);
+                if (!saved) return false;
+                
+                const tokenData = JSON.parse(saved);
+                const elapsed = (Date.now() - tokenData.savedAt) / 1000;
+                const expiresIn = tokenData.expiresIn || TOKEN_SOFT_EXPIRE;
+                
+                if (elapsed < expiresIn - 300) {
+                    gapi.client.setToken(tokenData.token);
+                    gisInited = true;
+                    const remaining = Math.floor((expiresIn - elapsed) / 3600);
+                    const remainingMins = Math.floor(((expiresIn - elapsed) % 3600) / 60);
+                    const timeStr = remaining > 0 ? remaining + ' 小時 ' + remainingMins + ' 分鐘' : remainingMins + ' 分鐘';
+                    
+                    const statusEl = document.getElementById('googleAuthStatus');
+                    statusEl.innerHTML = '✅ 已授權（剩餘約 ' + timeStr + '）';
+                    statusEl.className = 'auth-status success';
+                    statusEl.style.display = 'block';
+                    console.log('✅ 已載入儲存的 Token，剩餘約 ' + timeStr);
+                    return true;
+                } else {
+                    localStorage.removeItem(TOKEN_KEY);
+                    console.log('⚠️ 儲存的 Token 已過 24 小時');
+                    return false;
+                }
+            } catch (e) { 
+                console.error('載入 Token 失敗:', e); 
+                return false;
+            }
+        }
+        
+        // 檢查 Token 是否有效
+        function isTokenValid() {
+            const token = gapi.client.getToken();
+            if (!token) return false;
+            
+            try {
+                const saved = localStorage.getItem(TOKEN_KEY);
+                if (!saved) return !!token;
+                
+                const tokenData = JSON.parse(saved);
+                const elapsed = (Date.now() - tokenData.savedAt) / 1000;
+                const expiresIn = tokenData.expiresIn || TOKEN_SOFT_EXPIRE;
+                
+                return elapsed < expiresIn - 60;
+            } catch (e) { return !!token; }
+        }
+        
+        // 檢查 Google 實際 Token 是否過期
+        function isGoogleTokenExpired() {
+            try {
+                const saved = localStorage.getItem(TOKEN_KEY);
+                if (!saved) return true;
+                
+                const tokenData = JSON.parse(saved);
+                const elapsed = (Date.now() - tokenData.savedAt) / 1000;
+                const actualExpiresIn = tokenData.actualExpiresIn || 3600;
+                
+                return elapsed >= actualExpiresIn - 60;
+            } catch (e) { return true; }
+        }
+        
+        // 初始化 Token Client
+        function initTokenClient() {
+            const clientId = document.getElementById('googleClientId').value.trim();
+            if (!clientId) { showToast('⚠️ 請先輸入 Google Client ID', 'error'); return false; }
+            if (typeof google === 'undefined' || !google.accounts) { showToast('⚠️ Google API 尚未載入', 'error'); return false; }
+            
+            tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: clientId,
+                scope: SCOPES,
+                callback: function(response) {
+                    if (response.error) {
+                        showToast('❌ 授權失敗: ' + response.error, 'error');
+                        return;
+                    }
+                    gisInited = true;
+                    saveGoogleToken(response);
+                    
+                    const statusEl = document.getElementById('googleAuthStatus');
+                    statusEl.innerHTML = '✅ 已授權（24 小時有效）';
+                    statusEl.className = 'auth-status success';
+                    statusEl.style.display = 'block';
+                    showToast('✅ Google 日曆授權成功！', 'success');
+                }
+            });
+            return true;
+        }
+        
+        // 處理授權按鈕
+        function handleGoogleAuthorize() {
+            if (isTokenValid()) {
+                showToast('✅ 授權仍然有效（24 小時內），無需重新授權', 'success');
+                return;
+            }
+            
+            if (!initTokenClient()) return;
+            tokenClient.requestAccessToken({ prompt: '' });
+        }
+        
+        // 靜默刷新 Token
+        async function silentRefreshToken() {
+            return new Promise(function(resolve) {
+                if (!initTokenClient()) {
+                    resolve(false);
+                    return;
+                }
+                
+                tokenClient.requestAccessToken({
+                    prompt: '',
+                    callback: function(response) {
+                        if (response.error) {
+                            console.log('⚠️ 靜默刷新失敗');
+                            tokenClient.requestAccessToken({ prompt: 'consent' });
+                        } else {
+                            console.log('✅ Token 已靜默刷新');
+                            saveGoogleToken(response);
+                        }
+                        resolve(!response.error);
+                    }
+                });
+            });
+        }
+        
+        // 新增事件到 Google Calendar
+        async function addEventToGoogleCalendar(schedule, day) {
+            const clientId = document.getElementById('googleClientId').value.trim();
+            if (!clientId) { showToast('⚠️ 請先設定 Google Client ID', 'error'); return false; }
+            
+            if (!isTokenValid()) {
+                if (!await silentRefreshToken()) {
+                    showToast('❌ 請重新授權 Google 日曆', 'error');
+                    return false;
+                }
+            }
+            
+            if (isGoogleTokenExpired()) {
+                await silentRefreshToken();
+            }
+            
+            const startDateTime = day.date + 'T' + schedule.startTime + ':00';
+            const endDateTime = day.date + 'T' + schedule.endTime + ':00';
+            
+            const calendarEvent = {
+                summary: schedule.title || '未命名行程',
+                location: schedule.location || '',
+                description: schedule.note || '',
+                start: { dateTime: startDateTime, timeZone: 'Asia/Taipei' },
+                end: { dateTime: endDateTime, timeZone: 'Asia/Taipei' },
+                reminders: {
+                    useDefault: false,
+                    overrides: [
+                        { method: 'popup', minutes: 60 },
+                        { method: 'popup', minutes: 1440 }
+                    ]
+                }
+            };
+            
+            try {
+                await gapi.client.calendar.events.insert({ calendarId: 'primary', resource: calendarEvent });
+                return true;
+            } catch (err) {
+                console.error('匯入失敗:', err);
+                if (err.status === 401) {
+                    await silentRefreshToken();
+                    try {
+                        await gapi.client.calendar.events.insert({ calendarId: 'primary', resource: calendarEvent });
+                        return true;
+                    } catch (retryErr) {
+                        return false;
+                    }
+                }
+                return false;
+            }
+        }
+        
+        // 同步全部行程到 Google Calendar
+        async function syncAllToGoogleCalendar() {
+            const clientId = document.getElementById('googleClientId').value.trim();
+            if (!clientId) { 
+                showToast('⚠️ 請先設定 Google Client ID', 'error'); 
+                switchPage('settings');
+                return; 
+            }
+            
+            if (!isTokenValid()) {
+                showToast('⚠️ 請先授權 Google 日曆', 'error');
+                return;
+            }
+            
+            showToast('🔄 正在同步到 Google 日曆...', 'info');
+            
+            let successCount = 0;
+            let totalCount = 0;
+            
+            for (const day of appData.days) {
+                for (const schedule of day.schedules) {
+                    if (!schedule.synced) {
+                        totalCount++;
+                        const success = await addEventToGoogleCalendar(schedule, day);
+                        if (success) {
+                            schedule.synced = true;
+                            successCount++;
+                        }
+                    }
+                }
+            }
+            
+            if (totalCount === 0) {
+                showToast('ℹ️ 所有行程已同步', 'info');
+            } else {
+                saveData();
+                renderItinerary();
+                showToast('✅ 成功同步 ' + successCount + '/' + totalCount + ' 個行程！', 'success');
+            }
+        }
+        
+        // ============================================
+        // 頁面切換
+        // ============================================
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById('page-' + pageId).classList.add('active');
+            event.target.closest('.nav-item')?.classList.add('active');
+            
+            if (pageId === 'expense') {
+                updateExpenseFilterOptions();
+                renderExpenses();
+            } else if (pageId === 'shopping') {
+                renderShopping();
+            } else if (pageId === 'itinerary') {
+                renderItinerary();
+            }
+        }
+        
+        // ============================================
+        // 旅遊資訊
+        // ============================================
+        function handleDestinationChange() {
+            const dest = document.getElementById('destination').value;
+            const customGroup = document.getElementById('customDestGroup');
+            if (dest === 'custom') {
+                customGroup.style.display = 'block';
+            } else {
+                customGroup.style.display = 'none';
+            }
+            updateTripInfo();
+        }
+        
+        function updateTripInfo() {
+            const name = document.getElementById('tripName').value;
+            const dest = document.getElementById('destination').value;
+            const customDest = document.getElementById('customDestination').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            appData.trip.name = name;
+            appData.trip.destination = dest === 'custom' ? customDest : dest;
+            appData.trip.customDestination = customDest;
+            appData.trip.startDate = startDate;
+            appData.trip.endDate = endDate;
+            
+            document.getElementById('displayTripName').textContent = name || '我的旅行';
+            document.getElementById('displayDestination').textContent = appData.trip.destination || '🌍 點擊下方設定目的地';
+            
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+                document.getElementById('displayDates').textContent = `📅 ${formatDate(start)} ~ ${formatDate(end)} (${days}天)`;
+                document.getElementById('statDays').textContent = days;
+                
+                if (appData.days.length === 0) {
+                    generateDays(start, end);
+                }
+            }
+            
+            saveData();
+        }
+        
+        function generateDays(start, end) {
+            appData.days = [];
+            let current = new Date(start);
+            let dayNum = 1;
+            
+            while (current <= end) {
+                appData.days.push({
+                    id: Date.now() + dayNum,
+                    date: current.toISOString().split('T')[0],
+                    title: `Day ${dayNum}`,
+                    schedules: []
+                });
+                current.setDate(current.getDate() + 1);
+                dayNum++;
+            }
+            
+            renderItinerary();
+            saveData();
+        }
+        
+        // ============================================
+        // 行程管理
+        // ============================================
+        function renderItinerary() {
+            const container = document.getElementById('itineraryList');
+            
+            if (appData.days.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><div class="empty-text">尚未設定行程<br>請先在首頁設定旅遊日期</div></div>';
+                return;
+            }
+            
+            container.innerHTML = appData.days.map((day, index) => {
+                const scheduleHtml = day.schedules.length > 0 
+                    ? day.schedules.map(s => `
+                        <div class="schedule-item ${s.reminders && s.reminders.length > 0 ? 'has-reminder' : ''} ${s.synced ? 'synced' : ''}">
+                            <div class="schedule-time">${s.startTime} - ${s.endTime}</div>
+                            <div class="schedule-title">${getTypeEmoji(s.type)} ${s.title}</div>
+                            ${s.location ? `<div class="schedule-location">📍 ${s.location}</div>` : ''}
+                            <div class="schedule-actions">
+                                ${s.reminders && s.reminders.length > 0 ? '<span class="schedule-badge reminder">🔔 已設提醒</span>' : ''}
+                                ${s.synced ? '<span class="schedule-badge synced">📆 已同步</span>' : ''}
+                            </div>
+                            <div class="schedule-actions" style="margin-top:6px;">
+                                <button class="btn btn-outline btn-xs" onclick="deleteSchedule(${day.id}, ${s.id})">🗑️ 刪除</button>
+                                ${!s.synced ? `<button class="btn btn-secondary btn-xs" onclick="syncSingleToGoogle(${day.id}, ${s.id})">📆 同步</button>` : ''}
+                            </div>
+                        </div>
+                    `).join('')
+                    : '<div style="color:var(--text-muted);font-size:0.9em;padding:10px 0;">尚無行程安排</div>';
+                
+                return `
+                    <div class="day-card">
+                        <div class="day-header" onclick="toggleDayContent(${day.id})">
+                            <div>
+                                <div class="day-title">${day.title}</div>
+                                <div class="day-date">${formatDate(new Date(day.date))} • ${day.schedules.length} 個行程</div>
+                            </div>
+                            <span id="dayArrow${day.id}">▼</span>
+                        </div>
+                        <div class="day-content" id="dayContent${day.id}">
+                            ${scheduleHtml}
+                            <button class="btn btn-outline btn-sm" onclick="showAddScheduleModal(${day.id})" style="margin-top:10px;">
+                                ➕ 新增行程
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function toggleDayContent(dayId) {
+            const content = document.getElementById('dayContent' + dayId);
+            const arrow = document.getElementById('dayArrow' + dayId);
+            content.classList.toggle('show');
+            arrow.textContent = content.classList.contains('show') ? '▲' : '▼';
+        }
+        
+        function showAddScheduleModal(dayId) {
+            const select = document.getElementById('scheduleDay');
+            select.innerHTML = appData.days.map(d => 
+                `<option value="${d.id}" ${d.id === dayId ? 'selected' : ''}>${d.title} (${formatDate(new Date(d.date))})</option>`
+            ).join('');
+            
+            document.getElementById('scheduleStartTime').value = '09:00';
+            document.getElementById('scheduleEndTime').value = '10:00';
+            document.getElementById('scheduleTitle').value = '';
+            document.getElementById('scheduleType').value = '景點';
+            document.getElementById('scheduleLocation').value = '';
+            document.getElementById('scheduleNote').value = '';
+            document.querySelectorAll('#scheduleModal .reminder-option').forEach(r => r.classList.remove('checked'));
+            
+            showModal('scheduleModal');
+        }
+        
+        function showAddDayModal() {
+            document.getElementById('newDayDate').value = '';
+            document.getElementById('newDayTitle').value = '';
+            showModal('dayModal');
+        }
+        
+        function saveNewDay() {
+            const date = document.getElementById('newDayDate').value;
+            const title = document.getElementById('newDayTitle').value;
+            
+            if (!date) { showToast('請選擇日期', 'error'); return; }
+            
+            const dayNum = appData.days.length + 1;
+            appData.days.push({
+                id: Date.now(),
+                date: date,
+                title: title || `Day ${dayNum}`,
+                schedules: []
+            });
+            
+            appData.days.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            saveData();
+            renderItinerary();
+            closeModal('dayModal');
+            showToast('已新增行程日', 'success');
+        }
+        
+        async function saveSchedule() {
+            const dayId = parseInt(document.getElementById('scheduleDay').value);
+            const startTime = document.getElementById('scheduleStartTime').value;
+            const endTime = document.getElementById('scheduleEndTime').value;
+            const title = document.getElementById('scheduleTitle').value;
+            const type = document.getElementById('scheduleType').value;
+            const location = document.getElementById('scheduleLocation').value;
+            const note = document.getElementById('scheduleNote').value;
+            const syncToGoogle = document.getElementById('syncToGoogle').checked;
+            
+            if (!title) { showToast('請輸入活動名稱', 'error'); return; }
+            
+            const reminders = [];
+            document.querySelectorAll('#scheduleModal .reminder-option.checked input[value]:not([id="syncToGoogle"])').forEach(input => {
+                if (input.value !== 'google') {
+                    reminders.push(parseInt(input.value));
+                }
+            });
+            
+            const day = appData.days.find(d => d.id === dayId);
+            if (day) {
+                const schedule = {
+                    id: Date.now(),
+                    startTime,
+                    endTime,
+                    title,
+                    type,
+                    location,
+                    note,
+                    reminders,
+                    synced: false
+                };
+                
+                day.schedules.push(schedule);
+                day.schedules.sort((a, b) => a.startTime.localeCompare(b.startTime));
+                
+                // 同步到 Google Calendar
+                if (syncToGoogle) {
+                    const success = await addEventToGoogleCalendar(schedule, day);
+                    if (success) {
+                        schedule.synced = true;
+                        showToast('✅ 已新增行程並同步到日曆', 'success');
+                    } else {
+                        showToast('✅ 已新增行程（日曆同步失敗）', 'info');
+                    }
+                } else {
+                    showToast('已新增行程', 'success');
+                }
+                
+                // 建立 LINE 提醒排程
+                if (reminders.length > 0) {
+                    createLineReminders(day, schedule);
+                }
+                
+                saveData();
+                renderItinerary();
+                closeModal('scheduleModal');
+            }
+        }
+        
+        async function syncSingleToGoogle(dayId, scheduleId) {
+            const day = appData.days.find(d => d.id === dayId);
+            const schedule = day?.schedules.find(s => s.id === scheduleId);
+            
+            if (!day || !schedule) return;
+            
+            showToast('🔄 同步中...', 'info');
+            const success = await addEventToGoogleCalendar(schedule, day);
+            
+            if (success) {
+                schedule.synced = true;
+                saveData();
+                renderItinerary();
+                showToast('✅ 同步成功', 'success');
+            } else {
+                showToast('❌ 同步失敗', 'error');
+            }
+        }
+        
+        function deleteSchedule(dayId, scheduleId) {
+            if (!confirm('確定要刪除這個行程嗎？')) return;
+            
+            const day = appData.days.find(d => d.id === dayId);
+            if (day) {
+                day.schedules = day.schedules.filter(s => s.id !== scheduleId);
+                saveData();
+                renderItinerary();
+                showToast('已刪除', 'success');
+            }
+        }
+        
+        // ============================================
+        // LINE 提醒
+        // ============================================
+        function createLineReminders(day, schedule) {
+            const { lineToken, lineUserId, gasUrl, gasSecret } = appData.settings;
+            
+            if (!lineToken || !lineUserId || !gasUrl || !gasSecret) return;
+            
+            const schedules = [];
+            const startDateTime = new Date(day.date + 'T' + schedule.startTime + ':00');
+            const endDateTime = new Date(day.date + 'T' + schedule.endTime + ':00');
+            
+            const reminderLabels = { 1440: '前 1 天', 120: '前 2 小時', 60: '前 1 小時', 30: '前 30 分鐘' };
+            
+            schedule.reminders.forEach(minutes => {
+                const reminderTime = new Date(startDateTime.getTime() - minutes * 60 * 1000);
+                if (reminderTime > new Date()) {
+                    schedules.push({
+                        workshopTitle: schedule.title,
+                        workshopStart: startDateTime.toISOString(),
+                        workshopEnd: endDateTime.toISOString(),
+                        workshopLocation: schedule.location || '',
+                        workshopDescription: schedule.note || '',
+                        reminderTime: reminderTime.toISOString(),
+                        reminderMinutes: minutes,
+                        reminderLabel: reminderLabels[minutes] || ''
+                    });
+                }
+            });
+            
+            if (schedules.length === 0) return;
+            
+            fetch(gasUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({
+                    action: 'createSchedules',
+                    secret: gasSecret,
+                    token: lineToken,
+                    userId: lineUserId,
+                    schedules: schedules
+                })
+            })
+            .then(r => r.json())
+            .then(result => {
+                if (result.success) {
+                    showToast('🔔 已建立 ' + schedules.length + ' 個 LINE 提醒', 'success');
+                }
+            })
+            .catch(err => console.error('建立提醒失敗:', err));
+        }
+        
+        function testLineNotification() {
+            const { lineToken, lineUserId, gasUrl, gasSecret } = appData.settings;
+            
+            if (!lineToken || !lineUserId || !gasUrl || !gasSecret) {
+                showToast('請填寫完整 LINE 設定', 'error');
+                return;
+            }
+            
+            showToast('📨 發送測試中...', 'info');
+            
+            fetch(gasUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({
+                    secret: gasSecret,
+                    token: lineToken,
+                    userId: lineUserId,
+                    message: '🧪 測試通知\n\n✈️ 旅遊規劃高手\n已成功連接！\n\n⏰ 發送時間: ' + new Date().toLocaleString('zh-TW')
+                })
+            })
+            .then(r => r.json())
+            .then(result => {
+                if (result.success) showToast('✅ 測試訊息已發送！', 'success');
+                else showToast('❌ ' + (result.error || '發送失敗'), 'error');
+            })
+            .catch(err => showToast('❌ ' + err.message, 'error'));
+        }
+        
+        function viewSchedules() {
+            const { gasUrl, gasSecret } = appData.settings;
+            
+            if (!gasUrl || !gasSecret) {
+                showToast('請先設定 GAS', 'error');
+                return;
+            }
+            
+            showToast('📋 查詢中...', 'info');
+            
+            fetch(gasUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({ action: 'getSchedules', secret: gasSecret })
+            })
+            .then(r => r.json())
+            .then(result => {
+                if (result.success) {
+                    const count = result.schedules ? result.schedules.length : 0;
+                    showToast('📋 目前有 ' + count + ' 個提醒排程', 'success');
+                } else {
+                    showToast('❌ 查詢失敗', 'error');
+                }
+            })
+            .catch(err => showToast('❌ ' + err.message, 'error'));
+        }
+        
+        // ============================================
+        // 記帳管理
+        // ============================================
+        function updateExpenseFilterOptions() {
+            const select = document.getElementById('expenseFilterDate');
+            select.innerHTML = '<option value="all">全部日期</option>' + 
+                appData.days.map(d => `<option value="${d.date}">${d.title} (${formatDate(new Date(d.date))})</option>`).join('');
+        }
+        
+        function renderExpenses() {
+            const filter = document.getElementById('expenseFilterDate').value;
+            let filtered = appData.expenses;
+            
+            if (filter !== 'all') {
+                filtered = appData.expenses.filter(e => e.date === filter);
+            }
+            
+            const totalJPY = appData.expenses.filter(e => e.currency === 'JPY').reduce((a, b) => a + b.amount, 0);
+            const totalTWD = appData.expenses.filter(e => e.currency === 'TWD').reduce((a, b) => a + b.amount, 0);
+            
+            document.getElementById('expenseJPY').textContent = '¥' + totalJPY.toLocaleString();
+            document.getElementById('expenseTWD').textContent = '$' + totalTWD.toLocaleString();
+            document.getElementById('expenseCount').textContent = appData.expenses.length;
+            document.getElementById('statExpenseJPY').textContent = '¥' + totalJPY.toLocaleString();
+            document.getElementById('statExpenseTWD').textContent = '$' + totalTWD.toLocaleString();
+            
+            const container = document.getElementById('expenseList');
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">尚無花費紀錄<br>點擊 ➕ 開始記帳</div></div>';
+                return;
+            }
+            
+            container.innerHTML = filtered.slice().reverse().map(e => {
+                const currencyClass = e.currency === 'TWD' ? 'twd' : 'jpy';
+                const symbol = getCurrencySymbol(e.currency);
+                return `
+                    <div class="expense-item">
+                        <div class="expense-info">
+                            <div class="expense-category">${getCategoryEmoji(e.category)} ${e.category} • ${formatDate(new Date(e.date))}</div>
+                            <div class="expense-name">${e.item}</div>
+                            <div class="expense-meta">${e.payment}${e.note ? ' • ' + e.note : ''}</div>
+                        </div>
+                        <div class="expense-amount ${currencyClass}">${symbol}${e.amount.toLocaleString()}</div>
+                        <div class="expense-delete" onclick="deleteExpense(${e.id})">🗑️</div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function showAddExpenseModal() {
+            const select = document.getElementById('expenseDay');
+            select.innerHTML = appData.days.map(d => 
+                `<option value="${d.date}">${d.title} (${formatDate(new Date(d.date))})</option>`
+            ).join('');
+            
+            if (appData.days.length === 0) {
+                select.innerHTML = '<option value="">請先設定旅遊日期</option>';
+            }
+            
+            document.getElementById('expenseItem').value = '';
+            document.getElementById('expenseAmount').value = '';
+            document.getElementById('expenseNote').value = '';
+            
+            showModal('expenseModal');
+        }
+        
+        function saveExpense() {
+            const date = document.getElementById('expenseDay').value;
+            const category = document.getElementById('expenseCategory').value;
+            const item = document.getElementById('expenseItem').value;
+            const amount = parseFloat(document.getElementById('expenseAmount').value);
+            const currency = document.getElementById('expenseCurrency').value;
+            const payment = document.getElementById('expensePayment').value;
+            const note = document.getElementById('expenseNote').value;
+            
+            if (!item || !amount) {
+                showToast('請填寫項目和金額', 'error');
+                return;
+            }
+            
+            appData.expenses.push({ id: Date.now(), date, category, item, amount, currency, payment, note });
+            
+            saveData();
+            renderExpenses();
+            closeModal('expenseModal');
+            showToast('已記錄花費', 'success');
+        }
+        
+        function deleteExpense(id) {
+            if (!confirm('確定刪除？')) return;
+            appData.expenses = appData.expenses.filter(e => e.id !== id);
+            saveData();
+            renderExpenses();
+            showToast('已刪除', 'success');
+        }
+        
+        // ============================================
+        // 購物清單
+        // ============================================
+        function renderShopping() {
+            const total = appData.shopping.length;
+            const bought = appData.shopping.filter(s => s.bought).length;
+            const progress = total > 0 ? Math.round((bought / total) * 100) : 0;
+            
+            document.getElementById('shoppingProgress').textContent = progress + '%';
+            document.getElementById('shoppingProgressBar').style.width = progress + '%';
+            
+            const container = document.getElementById('shoppingList');
+            
+            if (appData.shopping.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-text">購物清單是空的<br>點擊 ➕ 新增想買的東西</div></div>';
+                return;
+            }
+            
+            const sorted = [...appData.shopping].sort((a, b) => {
+                if (a.bought !== b.bought) return a.bought ? 1 : -1;
+                const priority = { high: 0, medium: 1, low: 2 };
+                return priority[a.priority] - priority[b.priority];
+            });
+            
+            container.innerHTML = sorted.map(s => `
+                <div class="shop-item ${s.bought ? 'bought' : ''}" onclick="toggleShopping(${s.id})">
+                    <div class="shop-checkbox">${s.bought ? '✓' : ''}</div>
+                    <div class="shop-info">
+                        <div class="shop-name">${s.item}</div>
+                        <div class="shop-meta">
+                            ${s.budget ? '¥' + s.budget.toLocaleString() : ''}
+                            ${s.store ? ' • ' + s.store : ''}
+                        </div>
+                    </div>
+                    <span class="shop-priority ${s.priority}">${getPriorityLabel(s.priority)}</span>
+                </div>
+            `).join('');
+        }
+        
+        function showAddShoppingModal() {
+            document.getElementById('shopItem').value = '';
+            document.getElementById('shopBudget').value = '';
+            document.getElementById('shopPriority').value = 'medium';
+            document.getElementById('shopStore').value = '';
+            showModal('shoppingModal');
+        }
+        
+        function saveShopping() {
+            const item = document.getElementById('shopItem').value;
+            const budget = parseFloat(document.getElementById('shopBudget').value) || 0;
+            const priority = document.getElementById('shopPriority').value;
+            const store = document.getElementById('shopStore').value;
+            
+            if (!item) { showToast('請輸入商品名稱', 'error'); return; }
+            
+            appData.shopping.push({ id: Date.now(), item, budget, priority, store, bought: false });
+            
+            saveData();
+            renderShopping();
+            closeModal('shoppingModal');
+            showToast('已加入清單', 'success');
+        }
+        
+        function toggleShopping(id) {
+            const item = appData.shopping.find(s => s.id === id);
+            if (item) {
+                item.bought = !item.bought;
+                saveData();
+                renderShopping();
+            }
+        }
+        
+        // ============================================
+        // 匯出 Excel
+        // ============================================
+        function showExportModal() { showModal('exportModal'); }
+        
+        function exportToExcel() {
+            const wb = XLSX.utils.book_new();
+            
+            // 旅遊資訊
+            const tripInfo = [
+                ['旅遊名稱', appData.trip.name || '我的旅行'],
+                ['目的地', appData.trip.destination || ''],
+                ['出發日期', appData.trip.startDate || ''],
+                ['結束日期', appData.trip.endDate || ''],
+                ['天數', appData.days.length],
+                ['總花費 (日幣)', appData.expenses.filter(e => e.currency === 'JPY').reduce((a, b) => a + b.amount, 0)],
+                ['總花費 (台幣)', appData.expenses.filter(e => e.currency === 'TWD').reduce((a, b) => a + b.amount, 0)]
+            ];
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(tripInfo), '旅遊資訊');
+            
+            // 每日行程
+            const scheduleData = [['日期', '時間', '活動名稱', '類型', '地點', '備註', '已同步']];
+            appData.days.forEach(day => {
+                day.schedules.forEach(s => {
+                    scheduleData.push([day.date, s.startTime + ' - ' + s.endTime, s.title, s.type, s.location || '', s.note || '', s.synced ? '✓' : '']);
+                });
+            });
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(scheduleData), '每日行程');
+            
+            // 花費記帳
+            const expenseData = [['日期', '類別', '項目', '金額', '幣別', '支付方式', '備註']];
+            appData.expenses.forEach(e => {
+                expenseData.push([e.date, e.category, e.item, e.amount, e.currency, e.payment, e.note || '']);
+            });
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(expenseData), '花費記帳');
+            
+            // 購物清單
+            const shopData = [['商品', '預算', '優先度', '商店', '已購買']];
+            appData.shopping.forEach(s => {
+                shopData.push([s.item, s.budget || '', getPriorityLabel(s.priority), s.store || '', s.bought ? '✓' : '']);
+            });
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(shopData), '購物清單');
+            
+            const fileName = (appData.trip.name || '旅遊規劃') + '_' + new Date().toISOString().split('T')[0] + '.xlsx';
+            XLSX.writeFile(wb, fileName);
+            
+            closeModal('exportModal');
+            showToast('✅ 已下載 Excel', 'success');
+        }
+        
+        // ============================================
+        // 資料儲存
+        // ============================================
+        function saveData() {
+            if (!appData.settings.storageEnabled) return;
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+            } catch (e) { console.error('儲存失敗:', e); }
+        }
+        
+        function loadData() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    appData = { ...appData, ...parsed };
+                }
+            } catch (e) { console.error('載入失敗:', e); }
+        }
+        
+        function saveSettings() {
+            appData.settings.googleClientId = document.getElementById('googleClientId').value;
+            appData.settings.lineToken = document.getElementById('lineToken').value;
+            appData.settings.lineUserId = document.getElementById('lineUserId').value;
+            appData.settings.gasUrl = document.getElementById('gasUrl').value;
+            appData.settings.gasSecret = document.getElementById('gasSecret').value;
+            saveData();
+        }
+        
+        function toggleStorage() {
+            const toggle = document.getElementById('storageToggle');
+            toggle.classList.toggle('active');
+            appData.settings.storageEnabled = toggle.classList.contains('active');
+            
+            if (appData.settings.storageEnabled) {
+                saveData();
+                showToast('✅ 已啟用本機儲存', 'success');
+            } else {
+                showToast('⚠️ 已停用本機儲存', 'info');
+            }
+        }
+        
+        function clearAllData() {
+            if (!confirm('確定要清除所有資料嗎？此操作無法復原！')) return;
+            
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(TOKEN_KEY);
+            location.reload();
+        }
+        
+        function renderAll() {
+            document.getElementById('tripName').value = appData.trip.name || '';
+            
+            if (appData.trip.customDestination) {
+                document.getElementById('destination').value = 'custom';
+                document.getElementById('customDestGroup').style.display = 'block';
+                document.getElementById('customDestination').value = appData.trip.customDestination;
+            } else {
+                document.getElementById('destination').value = appData.trip.destination || '';
+            }
+            
+            document.getElementById('startDate').value = appData.trip.startDate || '';
+            document.getElementById('endDate').value = appData.trip.endDate || '';
+            document.getElementById('mainCurrency').value = appData.trip.mainCurrency || 'JPY';
+            
+            document.getElementById('googleClientId').value = appData.settings.googleClientId || '';
+            document.getElementById('lineToken').value = appData.settings.lineToken || '';
+            document.getElementById('lineUserId').value = appData.settings.lineUserId || '';
+            document.getElementById('gasUrl').value = appData.settings.gasUrl || '';
+            document.getElementById('gasSecret').value = appData.settings.gasSecret || '';
+            
+            if (appData.settings.storageEnabled) {
+                document.getElementById('storageToggle').classList.add('active');
+            }
+            
+            updateTripInfo();
+            renderItinerary();
+            renderExpenses();
+            renderShopping();
+        }
+        
+        // ============================================
+        // UI 輔助
+        // ============================================
+        function showModal(id) { document.getElementById(id).classList.add('show'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+        function toggleReminder(el) { el.classList.toggle('checked'); }
+        function toggleVisibility(inputId) {
+            const input = document.getElementById(inputId);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+        
+        function showToast(msg, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show ' + type;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        
+        function formatDate(date) {
+            const m = date.getMonth() + 1;
+            const d = date.getDate();
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            return `${m}/${d} (${weekdays[date.getDay()]})`;
+        }
+        
+        function getTypeEmoji(type) {
+            const emojis = { '景點': '🏛️', '美食': '🍜', '交通': '🚃', '住宿': '🏨', '購物': '🛍️', '其他': '📌' };
+            return emojis[type] || '📌';
+        }
+        
+        function getCategoryEmoji(cat) {
+            const emojis = { '飲食': '🍜', '交通': '🚃', '住宿': '🏨', '購物': '🛍️', '門票': '🎫', '其他': '📌' };
+            return emojis[cat] || '📌';
+        }
+        
+        function getCurrencySymbol(currency) {
+            const symbols = { 'JPY': '¥', 'KRW': '₩', 'THB': '฿', 'USD': '$', 'EUR': '€', 'TWD': '$' };
+            return symbols[currency] || '';
+        }
+        
+        function getPriorityLabel(p) {
+            return { high: '必買', medium: '想買', low: '隨意' }[p] || '';
+        }
+        
+        // Modal 點擊外部關閉
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) this.classList.remove('show');
+            });
+        });
+    </script>
+</body>
+</html>
