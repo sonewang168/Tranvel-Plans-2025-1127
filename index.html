@@ -896,7 +896,7 @@
                 
                 <div class="suggest-section">
                     <div class="suggest-title">🏛️ 可選景點（${dbData.spots.length}個）</div>
-                    <div class="suggest-chips">
+                    <div class="suggest-chips" id="spotsChipsContainer">
                         ${dbData.spots.map((s, i) => `<span class="suggest-chip selected" data-index="${i}">${s.name}</span>`).join('')}
                     </div>
                 </div>
@@ -937,8 +937,9 @@
                 return;
             }
             
-            // 取得選中的景點
-            const selectedChips = document.querySelectorAll('#autoGenerateContent .suggest-section:first-of-type .suggest-chip.selected');
+            // 取得選中的景點（從景點區塊選取）
+            const spotsContainer = document.getElementById('spotsChipsContainer');
+            const selectedChips = spotsContainer ? spotsContainer.querySelectorAll('.suggest-chip.selected') : [];
             const selectedSpots = [];
             selectedChips.forEach(chip => {
                 const idx = parseInt(chip.dataset.index);
